@@ -56,14 +56,7 @@ wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z
 rm -rf sdk-28-10-16.7z
 print_ok "Successfully!"
 
-print_msg "Updating libraries..."
-cd ~/autobuild/tools/win32/mingw32/lib
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libdll.a -O libdll.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libfreetype.a -O libfreetype.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libc.dll.a -O libc.dll.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libSDLn.a -O libSDLn.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libz.dll.a -O libz.dll.a
-print_ok "Successfully!"
+./update-libs
 
 print_msg "Downloading libisl..."
 cd /tmp
