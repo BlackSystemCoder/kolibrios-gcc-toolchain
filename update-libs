@@ -1,0 +1,18 @@
+print_msg(){
+    echo -e "\e[34m$1\e[0m"
+}
+
+print_msg "Updating libraries..."
+cd ~/autobuild/tools/win32/mingw32/lib
+
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libdll.a -O libdll.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libfreetype.a -O libfreetype.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libc.dll.a -O libc.dll.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libSDLn.a -O libSDLn.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libcurses.a -O libcurses.a 
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libz.dll.a -O libz.dll.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libogg.a -O libogg.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libvorbis.a -O libvorbis.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libopenjpeg.a -O libopenjpeg.a
+
+print_ok "Successfully!"
