@@ -56,7 +56,7 @@ wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z
 rm -rf sdk-28-10-16.7z
 print_ok "Successfully!"
 
-./update-libs
+bash update-libs
 
 print_msg "Downloading libisl..."
 cd /tmp
