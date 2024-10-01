@@ -56,7 +56,18 @@ wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z
 rm -rf sdk-28-10-16.7z
 print_ok "Successfully!"
 
-bash update-libs
+
+print_msg "updating libraries"
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libdll.a -O libdll.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libfreetype.a -O libfreetype.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libc.dll.a -O libc.dll.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libSDLn.a -O libSDLn.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libcurses.a -O libcurses.a 
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libz.dll.a -O libz.dll.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libogg.a -O libogg.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libvorbis.a -O libvorbis.a
+wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libopenjpeg.a -O libopenjpeg.a
+print_ok "Successfully!"
 
 print_msg "Downloading libisl..."
 cd /tmp
