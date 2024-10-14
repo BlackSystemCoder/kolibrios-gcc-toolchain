@@ -7,6 +7,8 @@ print_ok(){
 }
 
 print_msg "Updating libraries..."
+
+
 cd ~/autobuild/tools/win32/mingw32/lib
 
 wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libdll.a -O libdll.a
@@ -18,5 +20,6 @@ wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libz.dll.a -O libz.d
 wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libogg.a -O libogg.a
 wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libvorbis.a -O libvorbis.a
 wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libopenjpeg.a -O libopenjpeg.a
+
 
 print_ok "Successfully!"
