@@ -121,7 +121,7 @@ sudo ln -sf /usr/lib/libmpfr.so.6 /usr/lib/libmpfr.so.4
 print_ok "Successfully!"
 
 
-if ! rep -q 'export PATH=$PATH:/home/autobuild/tools/win32/bin' ~/.bashrc; then
+if ! grep -q 'export PATH=$PATH:/home/autobuild/tools/win32/bin' ~/.bashrc; then
   export PATH=$PATH:/home/autobuild/tools/win32/bin
   print_msg "Adding '/home/autobuild/tools/win32/bin' to '~/.bashrc'"
   echo 'export PATH=$PATH:/home/autobuild/tools/win32/bin' >> ~/.bashrc
