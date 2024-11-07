@@ -4,7 +4,12 @@ for /f %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
 
 set TOOLCHAIN_DIR=C:\MinGW\msys\1.0\home\autobuild\tools
 
+Call :print_msg Create the C:/MinGW/msys/1.0/home/autobuild folder...
+
 mkdir %TOOLCHAIN_DIR%
+
+Call :print_ok Successfully!
+
 
 cd %TOOLCHAIN_DIR%
 
@@ -18,9 +23,11 @@ wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/msys-kos32-5.4.0.7z -O %
 Call :print_ok Successfully!
 
 
+
 Call :print_msg Downloading libraries...
 
 cd %TOOLCHAIN_DIR%\win32\mingw32
+
 
 wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z -q -O %TOOLCHAIN_DIR%\sdk-28-10-16.7z
 
@@ -46,9 +53,15 @@ wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libopenjpeg.a -q -O 
 
 Call :print_ok Successfully!
 
+
+
 Call :print_msg Adding C:/MinGW/msys/1.0/home/autobuild/tools/win32/bin to PATH
 
 set PATH=%PATH%;%TOOLCHAIN_DIR%%\win32\bin
+
+
+
+Call :print_ok Installation was successful!
 
 
 

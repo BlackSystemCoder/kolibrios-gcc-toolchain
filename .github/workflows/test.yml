@@ -36,11 +36,17 @@ jobs:
         run: |
           kos32-gcc -v
           kos32-g++ -v
+          
   windows-install:
     runs-on: windows-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+      
+      - name: Install depends
+        run: |
+         choco install wget
+         choco install 7zip
 
       # Runs a single command using the runners shell
       - name: Run script
