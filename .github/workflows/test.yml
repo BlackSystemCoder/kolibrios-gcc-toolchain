@@ -29,6 +29,9 @@ jobs:
       - name: Run script
         run: ${{ github.workspace }}/./install
 
+      - name: add to path
+        run: echo "/home/autobuild/tools/win32/bin"
+
       - name: Test
         run: |
           kos32-gcc -v
