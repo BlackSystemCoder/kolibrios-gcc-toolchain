@@ -39,7 +39,7 @@ jobs:
         run: ${{ github.workspace }}/install.bat
 
       - name: Add toolchain to path
-        run: echo "C:/MinGW/msys/1.0/home/autobuild/tools/win32\bin" >> $GITHUB_PATH
+        run: echo "C:\MinGW\msys\1.0\home\autobuild\tools\win32\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Test run
         run: |
