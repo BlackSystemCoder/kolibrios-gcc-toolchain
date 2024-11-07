@@ -18,7 +18,7 @@ call :print_msg Download the kos32-gcc toolchain...
 
 wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/msys-kos32-5.4.0.7z -O %TOOLCHAIN_DIR%\kos32-toolchain.7z
 
-7z x -y kos32-toolchain.7z
+7z x -y %TOOLCHAIN_DIR%\kos32-toolchain.7z
 
 Call :print_ok Successfully!
 
@@ -29,9 +29,9 @@ Call :print_msg Downloading libraries...
 cd %TOOLCHAIN_DIR%\win32\mingw32
 
 
-wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z -q -O %TOOLCHAIN_DIR%\sdk-28-10-16.7z
+wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z -q -O %TOOLCHAIN_DIR%\win32\mingw32\sdk-28-10-16.7z
 
-7z x -y sdk-28-10-16.7z
+7z x -y %TOOLCHAIN_DIR%\win32\mingw32\sdk-28-10-16.7z
 
 Call :print_ok "Successfully!"
 
