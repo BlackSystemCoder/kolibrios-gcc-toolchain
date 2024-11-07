@@ -30,7 +30,7 @@ jobs:
         run: ${{ github.workspace }}/./install
 
       - name: add to path
-        run: echo "/home/autobuild/tools/win32/bin"
+        run: echo "/home/autobuild/tools/win32/bin" >> $GITHUB_PATH
 
       - name: Test
         run: |
