@@ -131,7 +131,7 @@ fi
 
 if ! grep -q '$PATH:/home/autobuild/tools/win32/bin' /etc/profile; then
 	print_msg "Adding '/home/autobuild/tools/win32/bin' to '/etc/profiles'"
-	echo '$PATH:/home/autobuild/tools/win32/bin' >> /etc/profile
+	sudo echo '$PATH:/home/autobuild/tools/win32/bin' >> /etc/profile
 fi
 
 cd "$OLDPWD"
