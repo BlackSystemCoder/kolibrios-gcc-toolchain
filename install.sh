@@ -123,10 +123,15 @@ sudo ln -sf /usr/lib/libmpfr.so.6 /usr/lib/libmpfr.so.4
 print_ok "Successfully!"
 
 
-if ! grep -q 'export PATH=$PATH:$TOOLCHAIN_DIR/win32/bin' ~/.bashrc; then
-  export PATH=$PATH:/home/autobuild/tools/win32/bin
-  print_msg "Adding '$TOOLCHAIN_DIR/win32/bin' to '~/.bashrc'"
-  echo 'export PATH=$PATH:$TOOLCHAIN_DIR/win32/bin' >> ~/.bashrc
+if ! grep -q 'export PATH=$PATH:/home/autobuild/tools/win32/bin' ~/.bashrc; then
+	export PATH=$PATH:/home/autobuild/tools/win32/bin
+	print_msg "Adding '$TOOLCHAIN_DIR/win32/bin' to '~/.bashrc'"
+	echo 'export PATH=$PATH:/home/autobuild/tools/win32/bin' >> ~/.bashrc
+fi
+
+if ! grep -q '$PATH:/home/autobuild/tools/win32/bin' /etc/profile; then
+	print_msg "Adding '/home/autobuild/tools/win32/bin' to '/etc/profiles'"
+	echo '$PATH:/home/autobuild/tools/win32/bin' >> /etc/profile
 fi
 
 cd "$OLDPWD"
