@@ -44,7 +44,7 @@ check_utils 7z
 
 print_msg "Create the /home/autobuild folder..."
 
-mkdir -fp $TOOLCHAIN_DIR
+mkdir -p $TOOLCHAIN_DIR
 
 print_ok "Successfully!"
 
