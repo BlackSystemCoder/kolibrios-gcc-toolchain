@@ -1,4 +1,5 @@
 @echo off
+
 for /f %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
 
 
@@ -6,7 +7,7 @@ set TOOLCHAIN_DIR=C:\MinGW\msys\1.0\home\autobuild\tools
 
 
 
-Call :print_msg Create the C:/MinGW/msys/1.0/home/autobuild folder...
+Call :print_msg Create the %TOOLCHAIN_DIR% folder...
 
 mkdir %TOOLCHAIN_DIR%
 
@@ -56,7 +57,7 @@ Call :print_ok Successfully!
 
 
 
-Call :print_msg Adding C:/MinGW/msys/1.0/home/autobuild/tools/win32/bin to PATH
+Call :print_msg Adding C:\MinGW\msys\1.0\home\autobuild\tools\win32\bin to PATH
 
 set PATH=%PATH%;%TOOLCHAIN_DIR%%\win32\bin
 
@@ -67,9 +68,9 @@ Call :print_ok Installation was successful!
 
 
 :print_msg
-    echo %ESC%[92m%*%ESC%[%m
+    echo %ESC%[34m%*%ESC%[%m
 exit /b
 
 :print_ok
-    echo %ESC%[36m%*%ESC%[%m
+    echo %ESC%[32m%*%ESC%[%m
 exit /b
