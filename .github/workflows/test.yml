@@ -48,7 +48,7 @@ jobs:
         shell: cmd
 
   build-Installer:
-    runs-on: windowd-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
 
