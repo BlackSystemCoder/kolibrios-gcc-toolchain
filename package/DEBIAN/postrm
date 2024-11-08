@@ -1,3 +1,4 @@
 #!/bin/bash
 
 rm -R /home/autobuild/tools/win32
+rm /etc/profiles.d/KolibriOS-Toolchain.sh
