@@ -43,8 +43,6 @@ jobs:
 
       - name: Test run
         run: |
-          C:\MinGW\msys\1.0\home\autobuild\tools\win32\bin\kos32-gcc -v
-          C:\MinGW\msys\1.0\home\autobuild\tools\win32\bin\kos32-g++ -v
           kos32-g++ -v
           kos32-gcc -v
         shell: cmd
