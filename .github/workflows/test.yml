@@ -47,24 +47,29 @@ jobs:
           kos32-gcc -v
         shell: cmd
 
+  build-Installer:
+    runs-on: windowd-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          cmake -B ${{ github.workspace }}/build
+          cmake --build ${{ github.workspace }}/build --target Installer
+
   build-package:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: build
-        run: ${{ github.workspace }}/./build-package.sh
-
+              
+      - name: Build
+        run: |
+          cmake -B ${{ github.workspace }}/build
+          cmake --build ${{ github.workspace }}/build --target Package
+        
       - name: Install package
         run: sudo apt install ${{ github.workspace }}/package.deb
-
+        
       - name: Add toolchain to path
         run: echo "/home/autobuild/tools/win32/bin" >> $GITHUB_PATH
-
-
-      - name: Test run
-        run: |
-          kos32-g++ -v
-          kos32-gcc -v
-
-      
+        

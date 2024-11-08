@@ -7,5 +7,6 @@ Depends: libc6-i386:amd64, libmpc3:amd64
 Pre-Depends: p7zip, wget
 Recommends: fasm
 Priority: optional
-Origin: https://github.com/Egor00f/kolibrios-gcc-toolchain,
-Maintainer: Egor00f
+Origin: https://github.com/Egor00f/kolibrios-gcc-toolchain
+Maintainer: Egor00f <velikiydolbayeb@gmail.com>
+Installed-Size: 131708

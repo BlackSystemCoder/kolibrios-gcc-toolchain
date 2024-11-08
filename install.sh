@@ -28,6 +28,10 @@ check_utils(){
     fi
 }
 
+pwd
+
+TOOLCHAIN_DIR="/home/autobuild/tools"
+
 
 print_msg "Checking utilities..."
 
@@ -40,9 +44,7 @@ check_utils 7z
 
 print_msg "Create the /home/autobuild folder..."
 
-sudo rm -rf ~/autobuild /home/autobuild
-mkdir -p ~/autobuild/tools
-sudo ln -sf  ~/autobuild /home/autobuild
+mkdir -fp $TOOLCHAIN_DIR
 
 print_ok "Successfully!"
 
@@ -50,7 +52,7 @@ print_ok "Successfully!"
 
 print_msg "Download the kos32-gcc toolchain..."
 
-wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/x86_64-linux-kos32-5.4.0.7z -q -O ~/autobuild/tools/kos32-toolchain.7z
+wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/x86_64-linux-kos32-5.4.0.7z -q -O $TOOLCHAIN_DIR/kos32-toolchain.7z
 
 print_ok "Successfully!"
 
@@ -58,7 +60,7 @@ print_ok "Successfully!"
 
 print_msg "Extracting files ..."
 
-cd ~/autobuild/tools/
+cd $TOOLCHAIN_DIR
 7z x -y kos32-toolchain.7z
 rm -rf kos32-toolchain.7z
 
@@ -68,7 +70,7 @@ print_ok "Successfully!"
 
 print_msg "Downloading libraries..."
 
-cd ~/autobuild/tools/win32/mingw32
+cd $TOOLCHAIN_DIR/win32/mingw32
 wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z -q -O sdk-28-10-16.7z
 7z x -y sdk-28-10-16.7z
 rm -rf sdk-28-10-16.7z
@@ -121,10 +123,12 @@ sudo ln -sf /usr/lib/libmpfr.so.6 /usr/lib/libmpfr.so.4
 print_ok "Successfully!"
 
 
-if ! grep -q 'export PATH=$PATH:/home/autobuild/tools/win32/bin' ~/.bashrc; then
+if ! grep -q 'export PATH=$PATH:$TOOLCHAIN_DIR/win32/bin' ~/.bashrc; then
   export PATH=$PATH:/home/autobuild/tools/win32/bin
-  print_msg "Adding '/home/autobuild/tools/win32/bin' to '~/.bashrc'"
-  echo 'export PATH=$PATH:/home/autobuild/tools/win32/bin' >> ~/.bashrc
+  print_msg "Adding '$TOOLCHAIN_DIR/win32/bin' to '~/.bashrc'"
+  echo 'export PATH=$PATH:$TOOLCHAIN_DIR/win32/bin' >> ~/.bashrc
 fi
+
+cd "$OLDPWD"
 
 print_ok "Installation was successful!"
