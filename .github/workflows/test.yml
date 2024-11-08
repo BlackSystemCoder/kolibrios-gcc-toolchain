@@ -68,7 +68,7 @@ jobs:
           cmake --build ${{ github.workspace }}/build --target Package
         
       - name: Install package
-        run: sudo dpkg -i ${{ github.workspace }}/package.deb
+        run: sudo dpkg -i ${{ github.workspace }}/build/package.deb
         
       - name: Add toolchain to path
         run: echo "/home/autobuild/tools/win32/bin" >> $GITHUB_PATH
