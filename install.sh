@@ -44,7 +44,7 @@ check_utils 7z
 
 print_msg "Create the /home/autobuild folder..."
 
-mkdir -p $TOOLCHAIN_DIR
+sudo mkdir -p $TOOLCHAIN_DIR
 
 print_ok "Successfully!"
 
@@ -52,7 +52,7 @@ print_ok "Successfully!"
 
 print_msg "Download the kos32-gcc toolchain..."
 
-wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/x86_64-linux-kos32-5.4.0.7z -q -O $TOOLCHAIN_DIR/kos32-toolchain.7z
+sudo wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/x86_64-linux-kos32-5.4.0.7z -q -O $TOOLCHAIN_DIR/kos32-toolchain.7z
 
 print_ok "Successfully!"
 
@@ -61,8 +61,8 @@ print_ok "Successfully!"
 print_msg "Extracting files ..."
 
 cd $TOOLCHAIN_DIR
-7z x -y kos32-toolchain.7z
-rm -rf kos32-toolchain.7z
+sudo 7z x -y kos32-toolchain.7z
+sudo rm -rf kos32-toolchain.7z
 
 print_ok "Successfully!"
 
@@ -71,9 +71,9 @@ print_ok "Successfully!"
 print_msg "Downloading libraries..."
 
 cd $TOOLCHAIN_DIR/win32/mingw32
-wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z -q -O sdk-28-10-16.7z
-7z x -y sdk-28-10-16.7z
-rm -rf sdk-28-10-16.7z
+sudo wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z -q -O sdk-28-10-16.7z
+sudo 7z x -y sdk-28-10-16.7z
+sudo rm -rf sdk-28-10-16.7z
 
 print_ok "Successfully!"
 
@@ -82,15 +82,15 @@ print_ok "Successfully!"
 print_msg "Updating libraries"
 
 cd lib
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libdll.a -q -O libdll.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libfreetype.a -q -O libfreetype.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libc.dll.a -q -O libc.dll.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libSDLn.a -q -O libSDLn.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libcurses.a -q -O libcurses.a 
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libz.dll.a -q -O libz.dll.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libogg.a -q -O libogg.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libvorbis.a -q -O libvorbis.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libopenjpeg.a -q -O libopenjpeg.a
+sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libdll.a -q -O libdll.a
+sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libfreetype.a -q -O libfreetype.a
+sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libc.dll.a -q -O libc.dll.a
+sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libSDLn.a -q -O libSDLn.a
+sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libcurses.a -q -O libcurses.a 
+sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libz.dll.a -q -O libz.dll.a
+sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libogg.a -q -O libogg.a
+sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libvorbis.a -q -O libvorbis.a
+sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libopenjpeg.a -q -O libopenjpeg.a
 
 print_ok "Successfully!"
 
