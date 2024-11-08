@@ -130,8 +130,7 @@ if ! grep -q 'export PATH=$PATH:/home/autobuild/tools/win32/bin' ~/.bashrc; then
 fi
 
 if [ "$EUID" -ne 0 ] then
-    if ! grep -q '$PATH:/home/autobuild/tools/win32/bin' /etc/profile; then
-	    print_msg "Adding '/home/autobuild/tools/win32/bin' to '/etc/profiles'"
+    if [ ! -f /etc/profile.d/KolibriOS-Toolchain.sh ] then
 	    sudo echo '$PATH:/home/autobuild/tools/win32/bin' >> /etc/profile.d/KolibriOS-Toolchain.sh
     fi
 fi
