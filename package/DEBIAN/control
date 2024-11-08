@@ -1,0 +1,11 @@
+Package: kos32-gcc
+Version: 0.1
+Architecture: all
+Section: devel
+Description: KolibriOS gcc toolchain
+Depends: libc6-i386:amd64, libmpc3:amd64
+Pre-Depends: p7zip, wget
+Recommends: fasm
+Priority: optional
+Origin: https://github.com/Egor00f/kolibrios-gcc-toolchain,
+Maintainer: Egor00f
