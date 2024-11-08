@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "KolibriOS gcc toolchain"
-#define MyAppVersion "0.1.1"
+#define MyAppVersion "0.1.2"
 #define MyAppPublisher "Egor00f"
 #define MyAppURL "https://github.com/Egor00f/kolibrios-gcc-toolchain"
 
