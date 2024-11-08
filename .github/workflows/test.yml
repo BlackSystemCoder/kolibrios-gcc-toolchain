@@ -47,4 +47,20 @@ jobs:
           kos32-gcc -v
         shell: cmd
 
+  build-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: build
+        run: ${{ github.workspace }}/./build-package.sh
+
+      - name: Install package
+        run: sudo apt install ${{ github.workspace }}/package.deb
+
+      - name: Test run
+        run: |
+          kos32-g++ -v
+          kos32-gcc -v
+
       
