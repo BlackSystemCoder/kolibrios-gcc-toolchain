@@ -129,9 +129,9 @@ if ! grep -q 'export PATH=$PATH:/home/autobuild/tools/win32/bin' ~/.bashrc; then
 	echo 'export PATH=$PATH:/home/autobuild/tools/win32/bin' >> ~/.bashrc
 fi
 
-if ["$EUID" -ne 0 ] && [ ! -f /etc/profile.d/KolibriOS-Toolchain.sh ]
+if ["$EUID" -ne 0 ]
 then 
-    echo '$PATH:/home/autobuild/tools/win32/bin' >> /etc/profile.d/KolibriOS-Toolchain.sh
+    echo 'PATH=$PATH:/home/autobuild/tools/win32/bin' >> /etc/profile
 else
     print_msg "You must be logined as root!"
 fi

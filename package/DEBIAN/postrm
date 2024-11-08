@@ -1,4 +1,4 @@
 #!/bin/bash
 
 rm -R /home/autobuild/tools/win32
-rm /etc/profile.d/KolibriOS-Toolchain.sh
+sed 'PATH=$PATH:/home/autobuild/tools/win32/bin' /etc/profile
