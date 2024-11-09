@@ -30,8 +30,9 @@ check_utils(){
 
 pwd
 
+DEFAULT_TOOLCHAIN_DIR="/home/autobuild/tools"
 
-TOOLCHAIN_DIR="/home/autobuild/tools"
+TOOLCHAIN_DIR=$DEFAULT_TOOLCHAIN_DIR
 
 MESSAGE="Toolchain install path(default is $TOOLCHAIN_DIR): "
 
@@ -132,7 +133,7 @@ sudo ln -sf /usr/lib/libmpfr.so.6 /usr/lib/libmpfr.so.4
 
 print_ok "Successfully!"
 
-
+sudo ln -sf $TOOLCHAIN_DIR $DEFAULT_TOOLCHAIN_DIR
 
 
 if [ ! "$(id -u)" -ne 0 ]
