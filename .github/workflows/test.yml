@@ -76,6 +76,12 @@ jobs:
         run: |
           cmake -B ${{ github.workspace }}/build
           cmake --build ${{ github.workspace }}/build --target Package
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: './build'
         
       - name: Install package
         run: sudo apt install ${{ github.workspace }}/build/package.deb
@@ -91,8 +97,3 @@ jobs:
       - name: Remove package
         run: sudo apt remove kos32-gcc
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository
-          path: './build'
