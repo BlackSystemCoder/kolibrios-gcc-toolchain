@@ -68,8 +68,15 @@ jobs:
           cmake --build ${{ github.workspace }}/build --target Package
         
       - name: Install package
-        run: sudo dpkg -i ${{ github.workspace }}/build/package.deb
+        run: sudo apt install ${{ github.workspace }}/build/package.deb
         
       - name: Add toolchain to path
         run: echo "/home/autobuild/tools/win32/bin" >> $GITHUB_PATH
         
+      - name: Test run
+        run: |
+          kos32-g++ -v
+          kos32-gcc -v
+
+      - name: Remove package
+        run: sudo apt remove kos32-gcc
