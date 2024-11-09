@@ -30,7 +30,17 @@ check_utils(){
 
 pwd
 
+
 TOOLCHAIN_DIR="/home/autobuild/tools"
+
+MESSAGE="Toolchain install path(default is $TOOLCHAIN_DIR): "
+
+echo -n $MESSAGE
+read INPUT
+
+if [[ ! -z "$INPUT" ]]; then
+   TOOLCHAIN_DIR=$INPUT
+fi
 
 
 print_msg "Checking utilities..."
