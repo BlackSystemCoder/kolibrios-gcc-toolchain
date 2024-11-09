@@ -4,7 +4,7 @@ rm -R /home/autobuild/tools/win32
 
 if  grep -q 'PATH=$PATH:/home/autobuild/tools/win32/bin' /etc/profile; then
 	val="PATH=\$PATH:/home/autobuild/tools/win32/bin"
-	sed -i '/$val/d' package/DEBIAN/control
+	sed -i '/$val/d' /etc/profile
 fi
 
 
