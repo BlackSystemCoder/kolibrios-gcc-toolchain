@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  #Test linux install script
   linux-install:
     runs-on: ubuntu-latest
 
@@ -25,6 +26,7 @@ jobs:
           kos32-gcc -v
           kos32-g++ -v
 
+  #Test windows install script
   windows-install:
     runs-on: windows-latest
     steps:
@@ -47,6 +49,7 @@ jobs:
           kos32-gcc -v
         shell: cmd
 
+  #Test Windows Installer
   build-Installer:
     runs-on: windows-latest
     steps:
@@ -57,7 +60,8 @@ jobs:
           cmake -B ${{ github.workspace }}/build
           cmake --build ${{ github.workspace }}/build --target Installer
 
-  build-package:
+  # Test Package
+  package:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
