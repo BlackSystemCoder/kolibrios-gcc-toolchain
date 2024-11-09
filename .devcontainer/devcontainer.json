@@ -10,7 +10,8 @@
 				"usernamehw.errorlens",
 				"streetsidesoftware.code-spell-checker",
 				"streetsidesoftware.code-spell-checker-russian",
-				"ibm.output-colorizer"
+				"ibm.output-colorizer",
+				"chouzz.vscode-innosetup"
 			]
 		}
 	}
