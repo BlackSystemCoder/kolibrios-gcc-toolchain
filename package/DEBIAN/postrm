@@ -3,5 +3,5 @@
 rm -R /home/autobuild/tools/win32
 
 if  grep -q 'PATH=$PATH:/home/autobuild/tools/win32/bin' /etc/profile; then
-	sed -i 'PATH=$PATH:/home/autobuild/tools/win32/bin' /etc/profile
+	sed -i '/PATH=$PATH:/home/autobuild/tools/win32/bin/d' /etc/profile
 fi
