@@ -61,10 +61,11 @@ jobs:
           cmake --build ${{ github.workspace }}/build --target Installer
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
+          name: windows-installer
           # Upload entire repository
-          path: './build'
+          path: './build/installer.exe'
 
   # Test Package
   package:
@@ -78,10 +79,11 @@ jobs:
           cmake --build ${{ github.workspace }}/build --target Package
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
+          name: package
           # Upload entire repository
-          path: './build'
+          path: './build/package.deb'
         
       - name: Install package
         run: echo '/home/autobuild/tools' | sudo apt install ${{ github.workspace }}/build/package.deb -y
