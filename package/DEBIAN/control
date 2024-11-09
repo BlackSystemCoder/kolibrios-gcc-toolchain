@@ -1,5 +1,5 @@
 Package: kos32-gcc
-Version: 0.1.2
+Version: 0.1.3
 Architecture: all
 Section: devel
 Depends: libc6-i386:amd64, libmpc3:amd64
