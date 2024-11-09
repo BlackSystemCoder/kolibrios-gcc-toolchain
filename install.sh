@@ -123,17 +123,18 @@ sudo ln -sf /usr/lib/libmpfr.so.6 /usr/lib/libmpfr.so.4
 print_ok "Successfully!"
 
 
-if ! grep -q 'export PATH=$PATH:/home/autobuild/tools/win32/bin' ~/.bashrc; then
-	export PATH=$PATH:/home/autobuild/tools/win32/bin
-	print_msg "Adding '$TOOLCHAIN_DIR/win32/bin' to '~/.bashrc'"
-	echo 'export PATH=$PATH:/home/autobuild/tools/win32/bin' >> ~/.bashrc
-fi
 
-if ["$EUID" -ne 0 ]
-then 
-    echo 'PATH=$PATH:/home/autobuild/tools/win32/bin' >> /etc/profile
+
+if [ ! "$(id -u)" -ne 0 ]
+then
+    print_msg "Add"
+	echo 'PATH=$PATH:/home/autobuild/tools/win32/bin' >> /etc/profile
 else
-    print_msg "You must be logined as root!"
+    if ! grep -q 'export PATH=$PATH:/home/autobuild/tools/win32/bin' ~/.bashrc; then
+	    export PATH=$PATH:/home/autobuild/tools/win32/bin
+	    print_msg "Adding '$TOOLCHAIN_DIR/win32/bin' to '~/.bashrc'"
+	    echo 'export PATH=$PATH:/home/autobuild/tools/win32/bin' >> ~/.bashrc
+    fi
 fi
 
 cd "$OLDPWD"
