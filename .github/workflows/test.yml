@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run script
-        run: ${{ github.workspace }}/./install.sh
+        run: echo '/home/autobuild/tools' | ${{ github.workspace }}/./install.sh
 
       - name: Add toolchain to path
         run: echo "/home/autobuild/tools/win32/bin" >> $GITHUB_PATH
@@ -84,7 +84,7 @@ jobs:
           path: './build'
         
       - name: Install package
-        run: sudo apt install ${{ github.workspace }}/build/package.deb
+        run: echo '/home/autobuild/tools' | sudo apt install ${{ github.workspace }}/build/package.deb -y
         
       - name: Add toolchain to path
         run: echo "/home/autobuild/tools/win32/bin" >> $GITHUB_PATH
