@@ -145,8 +145,11 @@ EXPORT_MESSSAGE="export $MESSAGE"
 
 if [ ! "$(id -u)" -ne 0 ]
 then
-    print_msg "Add path to profile"
+
 	echo $MESSAGE >> /etc/profile
+
+    sudo mkdir -p /etc/kos32-gcc
+    echo $TOOLCHAIN_DIR > /etc/kos32-gcc/install-path
 else
     if ! grep -q $EXPORT_MESSSAGE ~/.bashrc; then
 	    print_msg "Adding '$TOOLCHAIN_DIR/win32/bin' to '~/.bashrc'"
@@ -154,12 +157,9 @@ else
     fi
 fi
 
-# WTF?!
-sudo /usr/bin/mkdir -p /etc/kos32-gcc
-echo $TOOLCHAIN_DIR | sudo tee /etc/kos32-gcc/install-path
-
-
 export $MESSAGE
+
+
 
 cd "$OLDPWD"
 
