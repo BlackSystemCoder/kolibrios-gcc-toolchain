@@ -1,11 +1,12 @@
 #!/bin/bash
 
-rm -R /home/autobuild/tools/win32
+TOOLCHAIN_DIR=$(head -n 1 /etc/kos32-gcc/install-path)
 
-if  grep -q 'PATH=$PATH:/home/autobuild/tools/win32/bin' /etc/profile; then
-	val="PATH=\$PATH:/home/autobuild/tools/win32/bin"
-	sed -i '/$val/d' /etc/profile
+MESSAGE="PATH=\$PATH:$TOOLCHAIN_DIR"
+
+if  grep -q $MESSAGE /etc/profile; then
+	sed -i '/$MESSAGE/d' /etc/profile
 fi
 
-
+rm /etc/kos32-gcc -R
 

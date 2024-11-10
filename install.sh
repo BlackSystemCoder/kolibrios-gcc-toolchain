@@ -133,20 +133,33 @@ sudo ln -sf /usr/lib/libmpfr.so.6 /usr/lib/libmpfr.so.4
 
 print_ok "Successfully!"
 
-sudo ln -sf $TOOLCHAIN_DIR $DEFAULT_TOOLCHAIN_DIR
 
+if [ "$TOOLCHAIN_DIR" != "$DEFAULT_TOOLCHAIN_DIR" ]; then
+    sudo ln -sf $TOOLCHAIN_DIR $DEFAULT_TOOLCHAIN_DIR
+fi
+
+
+MESSAGE="PATH=\$PATH:$TOOLCHAIN_DIR/win32/bin"
+
+EXPORT_MESSSAGE="export $MESSAGE"
 
 if [ ! "$(id -u)" -ne 0 ]
 then
-    print_msg "Add"
-	echo 'PATH=$PATH:/home/autobuild/tools/win32/bin' >> /etc/profile
+    print_msg "Add path to profile"
+	echo $MESSAGE >> /etc/profile
 else
-    if ! grep -q 'export PATH=$PATH:/home/autobuild/tools/win32/bin' ~/.bashrc; then
-	    export PATH=$PATH:/home/autobuild/tools/win32/bin
+    if ! grep -q $EXPORT_MESSSAGE ~/.bashrc; then
 	    print_msg "Adding '$TOOLCHAIN_DIR/win32/bin' to '~/.bashrc'"
-	    echo 'export PATH=$PATH:/home/autobuild/tools/win32/bin' >> ~/.bashrc
+	    echo $EXPORT_MESSSAGE >> ~/.bashrc
     fi
 fi
+
+# WTF?!
+sudo /usr/bin/mkdir -p /etc/kos32-gcc
+sudo echo $TOOLCHAIN_DIR >> /etc/kos32-gcc/install-path
+
+
+export $MESSAGE
 
 cd "$OLDPWD"
 

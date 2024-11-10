@@ -1,0 +1,5 @@
+#!/bin/bash
+
+TOOLCHAIN_DIR=$(head -n 1 /etc/kos32-gcc/install-path)
+
+rm -R $TOOLCHAIN_DIR
