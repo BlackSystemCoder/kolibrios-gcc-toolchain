@@ -156,7 +156,7 @@ fi
 
 # WTF?!
 sudo /usr/bin/mkdir -p /etc/kos32-gcc
-sudo echo $TOOLCHAIN_DIR >> /etc/kos32-gcc/install-path
+echo $TOOLCHAIN_DIR | sudo tee /etc/kos32-gcc/install-path
 
 
 export $MESSAGE
