@@ -53,8 +53,9 @@ check_utils 7z
 
 
 
-print_msg "Create the /home/autobuild folder..."
+print_msg "Create the toolchain folders..."
 
+sudo mkdir -p $DEFAULT_TOOLCHAIN_DIR
 sudo mkdir -p $TOOLCHAIN_DIR
 
 print_ok "Successfully!"
