@@ -86,7 +86,7 @@ jobs:
           path: './build/package.deb'
         
       - name: Install package
-        run: echo '/home/autobuild/tools' | sudo apt install ${{ github.workspace }}/build/package.deb -y
+        run: echo '/kolibrios-toolchain' | sudo apt install ${{ github.workspace }}/build/package.deb -y
         
       - name: Add toolchain to path
         run: echo "/home/autobuild/tools/win32/bin" >> $GITHUB_PATH
@@ -95,6 +95,10 @@ jobs:
         run: |
           kos32-g++ -v
           kos32-gcc -v
+          /home/autobuild/tools/win32/bin/kos32-gcc -v
+          /home/autobuild/tools/win32/bin/kos32-g++ -v
+          /kolibrios-toolchain/win32/bin/kos32-gcc -v
+          /kolibrios-toolchain/win32/bin/kos32-g++ -v
 
       - name: Remove package
         run: sudo apt remove kos32-gcc
