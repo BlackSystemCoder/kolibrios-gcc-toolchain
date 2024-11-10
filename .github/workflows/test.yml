@@ -89,7 +89,7 @@ jobs:
         run: echo '/kolibrios-toolchain' | sudo apt install ${{ github.workspace }}/build/package.deb -y
         
       - name: Add toolchain to path
-        run: echo "/home/autobuild/tools/win32/bin" >> $GITHUB_PATH
+        run: echo "/kolibrios-toolchain/win32/bin" >> $GITHUB_PATH
         
       - name: Test run
         run: |
