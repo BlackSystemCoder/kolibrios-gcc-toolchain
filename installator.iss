@@ -58,7 +58,7 @@ Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
 Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 
 [Files]
-Source: ".\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ".\install.bat"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 [Run]
-Filename: "{app}\install.bat"; description: "install script"; StatusMsg: "Installing toolchain"; Flags: runhidden logoutput
+Filename: "{app}\install.bat"; description: "install script"; StatusMsg: "Installing toolchain"; Parameters: "{app}"; Flags: runhidden logoutput

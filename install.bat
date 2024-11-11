@@ -3,8 +3,14 @@
 for /f %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
 
 
-set TOOLCHAIN_DIR=C:\MinGW\msys\1.0\home\autobuild\tools
+set DEFAULT_TOOLCHAIN_DIR=C:\MinGW\msys\1.0\home\autobuild\tools
 
+if [%1] == [] (
+    set TOOLCHAIN_DIR=%DEFAULT_TOOLCHAIN_DIR%
+)
+else (
+    set TOOLCHAIN_DIR=%1
+)
 
 
 Call :print_msg Create the %TOOLCHAIN_DIR% folder...
