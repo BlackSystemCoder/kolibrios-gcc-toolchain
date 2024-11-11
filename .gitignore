@@ -1,4 +1,5 @@
 Output/
 package/DEBIAN/postinst
+package/DEBIAN/copyright
 package.deb
 build/

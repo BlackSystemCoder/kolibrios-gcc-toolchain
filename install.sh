@@ -43,6 +43,8 @@ if [[ ! -z "$INPUT" ]]; then
    TOOLCHAIN_DIR=$INPUT
 fi
 
+echo "Installing toolchain to $TOOLCHAIN_DIR"
+
 
 print_msg "Checking utilities..."
 
@@ -136,7 +138,7 @@ print_ok "Successfully!"
 
 
 if [ "$TOOLCHAIN_DIR" != "$DEFAULT_TOOLCHAIN_DIR" ]; then
-    sudo ln -sf $TOOLCHAIN_DIR $DEFAULT_TOOLCHAIN_DIR
+    sudo ln -sf $TOOLCHAIN_DIR/win32 $DEFAULT_TOOLCHAIN_DIR
 fi
 
 
@@ -146,7 +148,6 @@ EXPORT_MESSSAGE="export $MESSAGE"
 
 if [ ! "$(id -u)" -ne 0 ]
 then
-
 	echo $MESSAGE >> /etc/profile
 
     sudo mkdir -p /etc/kos32-gcc
@@ -154,7 +155,7 @@ then
 else
     if ! grep -q $EXPORT_MESSSAGE ~/.bashrc; then
 	    print_msg "Adding '$TOOLCHAIN_DIR/win32/bin' to '~/.bashrc'"
-	    echo $EXPORT_MESSSAGE >> ~/.bashrc
+	    echo '$EXPORT_MESSSAGE' >> ~/.bashrc
     fi
 fi
 

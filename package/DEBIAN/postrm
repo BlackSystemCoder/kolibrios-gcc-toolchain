@@ -2,10 +2,10 @@
 
 TOOLCHAIN_DIR=$(head -n 1 /etc/kos32-gcc/install-path)
 
-MESSAGE="PATH=\$PATH:$TOOLCHAIN_DIR"
+MESSAGE="PATH=\$PATH:$TOOLCHAIN_DIR\win32\bin"
 
-if  grep -q $MESSAGE /etc/profile; then
-	sed -i '/$MESSAGE/d' /etc/profile
+if  grep -q '$MESSAGE' /etc/profile; then
+	sudo sed -i '/$MESSAGE/d' /etc/profile
 fi
 
 rm /etc/kos32-gcc -R
