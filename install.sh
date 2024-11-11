@@ -161,7 +161,10 @@ fi
 
 export $MESSAGE
 
-
+sudo chmod 775 $TOOLCHAIN_DIR/win32/bin/*
+sudo chmod 775 $TOOLCHAIN_DIR/win32/include/*
+sudo chmod 775 $TOOLCHAIN_DIR/win32/lib/gcc/mingw32/5.4.0/include/*
+sudo chmod 775 $TOOLCHAIN_DIR/win32/lib/gcc/mingw32/5.4.0/include/c++/*
 
 cd "$OLDPWD"
 
