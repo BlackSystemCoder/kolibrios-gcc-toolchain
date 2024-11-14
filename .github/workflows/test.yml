@@ -59,7 +59,7 @@ jobs:
           path: './build/installer.exe'
 
   # Test Package
-  package:
+  deb-package:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -72,7 +72,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: package
+          name: deb-package
           # Upload entire repository
           path: './build/package.deb'
         
@@ -94,3 +94,20 @@ jobs:
       - name: Remove package
         run: sudo apt remove kos32-gcc
 
+  #Test chocolatey package
+  chocolatey-package:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          cmake -B ${{ github.workspace }}/build
+          cmake --build ${{ github.workspace }}/build --target 
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: choco-package
+          # Upload entire repository
+          path: './build/'
