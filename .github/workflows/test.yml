@@ -1,4 +1,4 @@
-name: test
+name: Test
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
+
   #Test linux install script
   linux-install:
     runs-on: ubuntu-latest
@@ -26,8 +27,8 @@ jobs:
           kos32-gcc -v
           kos32-g++ -v
 
-  #Test windows install script
-  windows-install:
+  #Test Batch install script
+  batch-install:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +39,16 @@ jobs:
          choco install 7zip
 
       - name: Run script
-        run: ${{ github.workspace }}/install.bat
+        run: ${{ github.workspace }}\install.bat
+
+  #Test PowerShell install script
+  PowerShell-install:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run script
+        run: ${{ github.workspace }}\install.ps1
 
   #Test Windows Installer
   build-Installer:

@@ -1,28 +1,42 @@
-@echo off
+#Requires -RunAsAdministrator
 
-$DEFAULT_TOOLCHAIN_DIR="C:\MinGW\msys\1.0\home\autobuild\tools"
+if (!Get-Module -ListAvailable -Name 7Zip4PowerShell) 
+{
+	Install-Module -Name 7Zip4PowerShell
+} 
+
+
+
+$DEFAULT_InstallPath="C:\MinGW\msys\1.0\home\autobuild\tools"
 PSStyle.Progress.View = 'Classic'
+$URL_TO_LIBS = "http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/"
 
-if ()
-{
-    $TOOLCHAIN_DIR=$DEFAULT_TOOLCHAIN_DIR
-}
-else
-{
-    $TOOLCHAIN_DIR=%1
+$LIST_OF_LIBS = @{
+	'libdll.a', 
+	'libfreetype.a',
+	'libc.dll.a',
+	'libSDLn.a',
+	'libcurses.a',
+	'libz.dll.a',
+	'libogg.a',
+	'libvorbis.a',
+	'libopenjpeg.a'
 }
 
+param (
+	[string] $InstallPath=$DEFAULT_InstallPath
+)
 
 
 $OuterLoopProgressParameters = @{
 	Activity    	= "Installing toolchain"
 	Status      	= "toolchain",
 	PercentComplete	= 0,
-	CurrentOperation = "Create the $TOOLCHAIN_DIR folder"
+	CurrentOperation = "Create the $InstallPath folder"
 }
 Write-Progress @OuterLoopProgressParameters
 
-mkdir $TOOLCHAIN_DIR
+mkdir $InstallPath
 
 
 
@@ -34,7 +48,7 @@ $OuterLoopProgressParameters = @{
 }
 Write-Progress @OuterLoopProgressParameters
 
-wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/msys-kos32-5.4.0.7z -O $TOOLCHAIN_DIR\kos32-toolchain.7z
+Invoke-WebRequest http://ftp.kolibrios.org/users/Serge/new/Toolchain/msys-kos32-5.4.0.7z -OutFile $InstallPath\kos32-toolchain.7z
 
 $OuterLoopProgressParameters = @{
 	Activity    	= "Installing toolchain"
@@ -44,8 +58,7 @@ $OuterLoopProgressParameters = @{
 }
 Write-Progress @OuterLoopProgressParameters
 
-7z x -y $TOOLCHAIN_DIR\kos32-toolchain.7z -o$TOOLCHAIN_DIR
-
+Expand-7Zip -ArchiveFileName $InstallPath\kos32-toolchain.7z -TargetPath $InstallPath
 
 
 $OuterLoopProgressParameters = @{
@@ -56,10 +69,9 @@ $OuterLoopProgressParameters = @{
 }
 Write-Progress @OuterLoopProgressParameters
 
+Invoke-WebRequest http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z -OutFile $InstallPath\win32\mingw32\sdk-28-10-16.7z
 
-wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z -O $TOOLCHAIN_DIR\win32\mingw32\sdk-28-10-16.7z
-
-
+# Unpack libs
 $OuterLoopProgressParameters = @{
 	Activity    	= "Installing toolchain"
 	Status      	= "Installing libraries",
@@ -68,115 +80,22 @@ $OuterLoopProgressParameters = @{
 }
 Write-Progress @OuterLoopProgressParameters
 
+Expand-7Zip -ArchiveFileName $InstallPath\win32\mingw32\sdk-28-10-16.7z -TargetPath $InstallPath\win32\mingw32\
 
-$OuterLoopProgressParameters = @{
-	Activity    	= "Installing toolchain"
-	Status      	= "Installing libraries",
-	PercentComplete	= 60,
-	CurrentOperation = "unpacking libraries"
+
+
+for (($i = 0); $i -lt $LIST_OF_LIBS.count; $i++)
+{
+	$OuterLoopProgressParameters = @{
+		Activity    	= "Installing toolchain"
+		Status      	= "Updating libraries",
+		PercentComplete	= 50+(49 * ($i / $LIST_OF_LIBS.count) ),
+		CurrentOperation = "download $($LIST_OF_LIBS[$i])"
+	}
+	Write-Progress @OuterLoopProgressParameters
+
+	Invoke-WebRequest $URL_TO_LIBS$LIST_OF_LIBS[$i] -OutFile $InstallPath\win32\mingw32\lib\$LIST_OF_LIBS[$i]
 }
-Write-Progress @OuterLoopProgressParameters
-
-7z x -y $TOOLCHAIN_DIR\win32\mingw32\sdk-28-10-16.7z
-
-
-
-
-$OuterLoopProgressParameters = @{
-	Activity    	= "Installing toolchain"
-	Status      	= "Updating libraries",
-	PercentComplete	= 65,
-	CurrentOperation = "download libdll.a"
-}
-Write-Progress @OuterLoopProgressParameters
-
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libdll.a -O $TOOLCHAIN_DIR\win32\mingw32\lib\libdll.a
-
-$OuterLoopProgressParameters = @{
-	Activity    	= "Installing toolchain"
-	Status      	= "Updating libraries",
-	PercentComplete	= 67,
-	CurrentOperation = "download libfreetype.a"
-}
-Write-Progress @OuterLoopProgressParameters
-
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libfreetype.a -O $TOOLCHAIN_DIR\win32\mingw32\lib\libfreetype.a
-
-$OuterLoopProgressParameters = @{
-	Activity    	= "Installing toolchain"
-	Status      	= "Updating libraries",
-	PercentComplete	= 70,
-	CurrentOperation = "download libc.dll.a"
-}
-Write-Progress @OuterLoopProgressParameters
-
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libc.dll.a -O $TOOLCHAIN_DIR\win32\mingw32\lib\libc.dll.a
-
-
-$OuterLoopProgressParameters = @{
-	Activity    	= "Installing toolchain"
-	Status      	= "Updating libraries",
-	PercentComplete	= 75,
-	CurrentOperation = "download libSDLn.a"
-}
-Write-Progress @OuterLoopProgressParameters
-
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libSDLn.a -O $TOOLCHAIN_DIR\win32\mingw32\lib\libSDLn.a
-
-
-$OuterLoopProgressParameters = @{
-	Activity    	= "Installing toolchain"
-	Status      	= "Updating libraries",
-	PercentComplete	= 78,
-	CurrentOperation = "download libcurses.a "
-}
-Write-Progress @OuterLoopProgressParameters
-
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libcurses.a -O $TOOLCHAIN_DIR\win32\mingw32\lib\libcurses.a 
-
-
-$OuterLoopProgressParameters = @{
-	Activity    	= "Installing toolchain"
-	Status      	= "Updating libraries",
-	PercentComplete	= 82,
-	CurrentOperation = "download libz.dll.a"
-}
-Write-Progress @OuterLoopProgressParameters
-
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libz.dll.a -O $TOOLCHAIN_DIR\win32\mingw32\lib\libz.dll.a
-
-
-$OuterLoopProgressParameters = @{
-	Activity    	= "Installing toolchain"
-	Status      	= "Updating libraries",
-	PercentComplete	= 85,
-	CurrentOperation = "download libogg.a"
-}
-Write-Progress @OuterLoopProgressParameters
-
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libogg.a -O $TOOLCHAIN_DIR\win32\mingw32\lib\libogg.a
-
-
-$OuterLoopProgressParameters = @{
-	Activity    	= "Installing toolchain"
-	Status      	= "Updating libraries",
-	PercentComplete	= 88,
-	CurrentOperation = "download libvorbis.a"
-}
-Write-Progress @OuterLoopProgressParameters
-
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libvorbis.a -O $TOOLCHAIN_DIR\win32\mingw32\lib\libvorbis.a
-
-
-$OuterLoopProgressParameters = @{
-	Activity    	= "Installing toolchain"
-	Status      	= "Updating libraries",
-	PercentComplete	= 95,
-	CurrentOperation = "download libopenjpeg.a"
-}
-Write-Progress @OuterLoopProgressParameters
-
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libopenjpeg.a -O $TOOLCHAIN_DIR\win32\mingw32\lib\libopenjpeg.a
 
 
 
@@ -185,16 +104,6 @@ $OuterLoopProgressParameters = @{
 	Status      	= "Done!",
 	PercentComplete	= 99,
 	CurrentOperation = "Adding C:\MinGW\msys\1.0\home\autobuild\tools\win32\bin to PATH"
-}
-Write-Progress @OuterLoopProgressParameters
-
-set PATH=%PATH%;$TOOLCHAIN_DIR%\win32\bin
-
-$OuterLoopProgressParameters = @{
-	Activity    	= "Installing toolchain"
-	Status      	= "Done!",
-	PercentComplete	= 100,
-	CurrentOperation = "download libdll.a"
 }
 Write-Progress @OuterLoopProgressParameters
 

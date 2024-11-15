@@ -65,11 +65,11 @@ Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
     Check: NeedsAddPath('{app}\win32\bin')
 
 [Files]
-Source: ".\install.bat"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ".\install.ps1"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Run]
-Filename: "{app}\install.bat"; description: "install script"; StatusMsg: "Installing toolchain"; Parameters: "{app}"; Flags: runhidden logoutput
+Filename: "{app}\install.ps1"; description: "install script"; StatusMsg: "Installing toolchain"; Parameters: "-InstallPath {app}"; Flags: runhidden logoutput
 
 [Icons]
 Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
