@@ -4,3 +4,4 @@ package/DEBIAN/copyright
 package.deb
 build/
 chocolatey/kos32-gcc*.nupkg
+chocolatey/install.ps1
