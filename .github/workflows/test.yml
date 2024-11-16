@@ -12,7 +12,6 @@ jobs:
   #Test linux install script
   linux-install:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -53,6 +52,7 @@ jobs:
   #Test Windows Installer
   build-Installer:
     runs-on: windows-latest
+    needs: PowerShell-install
     steps:
       - uses: actions/checkout@v4
 
@@ -68,9 +68,10 @@ jobs:
           # Upload entire repository
           path: './build/installer.exe'
 
-  # Test Package
-  deb-package:
+  # Test deb package build
+  deb-package-build:
     runs-on: ubuntu-latest
+    needs: linux-install
     steps:
       - uses: actions/checkout@v4
               
@@ -85,7 +86,12 @@ jobs:
           name: deb-package
           # Upload entire repository
           path: './build/package.deb'
-        
+
+  # Test deb package install/remove
+  deb-package-test:
+    runs-on: ubuntu-latest
+    needs: deb-package-build
+    steps:
       - name: Install package
         run: echo '/kolibrios-toolchain' | sudo apt install ${{ github.workspace }}/build/package.deb -y
         
@@ -104,9 +110,10 @@ jobs:
       - name: Remove package
         run: sudo apt remove kos32-gcc
 
-  #Test chocolatey package
-  chocolatey-package:
+  #Test chocolatey package build
+  chocolatey-package-build:
     runs-on: windows-latest
+    needs: PowerShell-install
     steps:
       - uses: actions/checkout@v4
 
@@ -122,8 +129,14 @@ jobs:
           # Upload entire repository
           path: './build/choco-package.nupkg'
 
+  # Test chocolatey package install/remove
+  chocolatey-package-test:
+    runs-on: ubuntu-latest
+    needs: chocolatey-package-build
+    steps:
       - name: Install package
         run: choco install ${{ github.workspace }}\build\choco-package.nupkg
 
       - name: Remove package
         run: choco uninstall kos32-gcc
+
