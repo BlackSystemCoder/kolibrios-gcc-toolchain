@@ -77,7 +77,7 @@ jobs:
       - name: Build
         run: |
           cmake -B ${{ github.workspace }}/build
-          cmake --build ${{ github.workspace }}/build --target Package
+          cmake --build ${{ github.workspace }}/build --target deb
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -113,11 +113,17 @@ jobs:
       - name: Build
         run: |
           cmake -B ${{ github.workspace }}/build
-          cmake --build ${{ github.workspace }}/build --target 
+          cmake --build ${{ github.workspace }}/build --target choco
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: choco-package
           # Upload entire repository
-          path: './build/'
+          path: './build/choco-package.nupkg'
+
+      - name: Install package
+        run: choco install ${{ github.workspace }}\build\choco-package.nupkg
+
+      - name: Remove package
+        run: choco uninstall kos32-gcc
