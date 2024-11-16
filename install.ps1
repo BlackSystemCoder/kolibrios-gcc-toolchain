@@ -1,4 +1,8 @@
-﻿#Requires -RunAsAdministrator
+ #Requires -RunAsAdministrator
+
+param(
+	[string]$InstallPath='C:\MinGW\msys\1.0\home\autobuild\tools'
+)
 
 if (Get-Module -ListAvailable -Name 7Zip4PowerShell) 
 {} 
@@ -11,9 +15,6 @@ $URL_TO_LIBS = "http://builds.kolibrios.org/en_US/data/contrib/sdk/lib"
 
 $LIST_OF_LIBS =	'libdll.a',	'libfreetype.a', 'libc.dll.a', 'libSDLn.a', 'libSDL_mixer.a', 'libcurses.a', 'libz.dll.a', 'libogg.a', 'libvorbis.a', 'libopenjpeg.a', 'libopenjpeg.a', 'libsqlite3.dll.a', 'libjbig2dec.a'
 
-param(
-	[string]$InstallPath='C:\MinGW\msys\1.0\home\autobuild\tools'
-)
 
 
 Write-Progress -Activity 'Installing toolchain' -Status 'toolchain' -PercentComplete 0 -CurrentOperation 'Create the $InstallPath folder'
