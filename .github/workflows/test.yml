@@ -54,6 +54,11 @@ jobs:
       - name: Run script
         run: ${{ github.workspace }}\install.ps1
 
+      - name: Test
+        run: |
+          kos32-gcc -v
+          kos32-g++ -v
+
   #Test Windows Installer
   build-Installer:
     runs-on: windows-latest
@@ -143,7 +148,7 @@ jobs:
 
   # Test chocolatey package install/remove
   chocolatey-package-test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: chocolatey-package-build
     steps:
       - uses: actions/checkout@v4
