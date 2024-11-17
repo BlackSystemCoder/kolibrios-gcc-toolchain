@@ -11,3 +11,5 @@ Install-ChocolateyPackage "$packageName" -validExitCodes $validExitCodes
 $INSTALL_PATH = Read-Host 'Path to install toolchain(Enter - default)'
 
 .\install.ps1 -InstallPath $INSTALL_PATH
+
+$env:KOS32GCCPATH = $INSTALL_PATH

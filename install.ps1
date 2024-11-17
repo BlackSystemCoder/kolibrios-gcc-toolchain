@@ -1,4 +1,4 @@
- #Requires -RunAsAdministrator
+#Requires -RunAsAdministrator
 
 param(
 	[string]$InstallPath='C:\MinGW\msys\1.0\home\autobuild\tools'
@@ -11,15 +11,13 @@ else
 	Install-Module -Name 7Zip4PowerShell
 }
 
-$URL_TO_LIBS = "http://builds.kolibrios.org/en_US/data/contrib/sdk/lib"
-
-$LIST_OF_LIBS =	'libdll.a',	'libfreetype.a', 'libc.dll.a', 'libSDLn.a', 'libSDL_mixer.a', 'libcurses.a', 'libz.dll.a', 'libogg.a', 'libvorbis.a', 'libopenjpeg.a', 'libopenjpeg.a', 'libsqlite3.dll.a', 'libjbig2dec.a'
-
+$LIBS_PATH = '$InstallPath\win32\mingw32\lib\'
+$LIBS_URL = 'http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/'
 
 
 Write-Progress -Activity 'Installing toolchain' -Status 'toolchain' -PercentComplete 0 -CurrentOperation 'Create the $InstallPath folder'
 
-mkdir $InstallPath
+mkdir $InstallPath -Force
 
 
 Write-Progress -Activity 'Installing toolchain' -Status 'toolchain' -PercentComplete 1 -CurrentOperation 'Download the kos32-gcc toolchain'
@@ -43,11 +41,18 @@ Expand-7Zip -ArchiveFileName $InstallPath\win32\mingw32\sdk-28-10-16.7z -TargetP
 
 
 
-for (($i = 0); $i -lt $LIST_OF_LIBS.count; $i++)
-{
-	Write-Progress -Activity 'Installing toolchain' -Status 'Installing libraries' -PercentComplete 50+(50 * ($i / $LIST_OF_LIBS.count) ) -CurrentOperation = 'download $($LIST_OF_LIBS[$i])'
+Write-Progress -Activity 'Installing toolchain' -Status 'Installing libraries' -PercentComplete 60 -CurrentOperation "Download libraries"
 
-	$LINK = "$URL_TO_LIBS/$LIST_OF_LIBS[$i]"
 
-	Invoke-WebRequest $LINK -OutFile $InstallPath\win32\mingw32\lib\$LIST_OF_LIBS[$i]
+$response  = Invoke-WebRequest -Uri $LIBS_URL -Method GET
+
+$files = @( $response.Content -split [environment]::NewLine | ? { $_ -like '*tageswerte*.zip*' } | % { $_ -replace '^(.*>)(tages.*\.zip)<.*', '$2' } )
+
+foreach( $file in $files ) {
+
+    Invoke-WebRequest -Uri ($LIBS_URL + $file) -Method GET -OutFile ($LIBS_PATH + $file)
 }
+
+Write-Progress -Activity 'Installing toolchain' -Status 'Done!' -PercentComplete 99 -CurrentOperation "end"
+
+$env:Path += ';$InstallPath\win32\bin'

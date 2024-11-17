@@ -46,6 +46,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install modules
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module -Name 7Zip4PowerShell
+
       - name: Run script
         run: ${{ github.workspace }}\install.ps1
 
