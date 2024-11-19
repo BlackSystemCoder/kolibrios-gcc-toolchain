@@ -98,8 +98,8 @@ print_msg "Updating libraries"
 
 cd lib
 sudo wget -r --no-parent -q http://builds.kolibrios.org/en_US/data/contrib/sdk/lib
-mv builds.kolibrios.org/en_US/data/contrib/sdk/lib/* ./
-rm -R builds.kolibrios.org
+sudo mv builds.kolibrios.org/en_US/data/contrib/sdk/lib/* ./
+sudo rm -R builds.kolibrios.org
 
 print_ok "Successfully!"
 
@@ -155,9 +155,9 @@ else
 fi
 
 sudo chmod 775 $TOOLCHAIN_DIR/win32/bin/*
-sudo chmod 775 $TOOLCHAIN_DIR/win32/include/*
-sudo chmod -R 775 $TOOLCHAIN_DIR/win32/lib/gcc/mingw32/5.4.0/include
-
+sudo chmod 774 $TOOLCHAIN_DIR/win32/include/*
+sudo chmod -R 774 $TOOLCHAIN_DIR/win32/lib/gcc/mingw32/5.4.0/include
+sudo chmod 774 $TOOLCHAIN_DIR/win32/lib/*
 
 cd "$OLDPWD"
 
