@@ -2,30 +2,31 @@
 
 # Written by turbocat2001 (Maxim Logaev)
 # Installation steps described by maxcodehack (Maxim Kuzmitsky)
+# modified by Egor00f (Egor)
 
 set -e
 
 print_msg(){
-    echo -e "\e[34m$1\e[0m"
+	echo -e "\e[34m$1\e[0m"
 }
 
 print_ok(){
-    echo -e "\e[32m$1\e[0m"
+	echo -e "\e[32m$1\e[0m"
 }
 
 print_err(){
-    echo -e "\e[31m$1\e[0m"
-    exit
+	echo -e "\e[31m$1\e[0m"
+	exit
 }
 
 check_utils(){
-    printf "%s: " $1
-    if command -v $1 &> /dev/null
-    then
-        print_ok "ok\r"
-    else
-        print_err "no\r"
-    fi
+	printf "%s: " $1
+	if command -v $1 &> /dev/null
+	then
+		print_ok "ok\r"
+	else
+		print_err "no\r"
+	fi
 }
 
 pwd
@@ -40,7 +41,7 @@ echo -n $MESSAGE
 read INPUT
 
 if [[ ! -z "$INPUT" ]]; then
-   TOOLCHAIN_DIR=$INPUT
+	TOOLCHAIN_DIR=$INPUT
 fi
 
 echo "Installing toolchain to $TOOLCHAIN_DIR"
@@ -96,15 +97,7 @@ print_ok "Successfully!"
 print_msg "Updating libraries"
 
 cd lib
-sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libdll.a -q -O libdll.a
-sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libfreetype.a -q -O libfreetype.a
-sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libc.dll.a -q -O libc.dll.a
-sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libSDLn.a -q -O libSDLn.a
-sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libcurses.a -q -O libcurses.a 
-sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libz.dll.a -q -O libz.dll.a
-sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libogg.a -q -O libogg.a
-sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libvorbis.a -q -O libvorbis.a
-sudo wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libopenjpeg.a -q -O libopenjpeg.a
+sudo wget -r --no-parent -q http://builds.kolibrios.org/en_US/data/contrib/sdk/lib
 
 print_ok "Successfully!"
 
@@ -117,7 +110,7 @@ sudo wget http://board.kolibrios.org/download/file.php?id=8301libisl.so.10.2.2.7
 sudo 7z x -y libisl.so.10.2.2.7z
 
 if ! [ -d /usr/lib/x86_64-linux-gnu/ ]; then
-    sudo mkdir -p /usr/lib/x86_64-linux-gnu/
+	sudo mkdir -p /usr/lib/x86_64-linux-gnu/
 fi
 
 sudo mv /tmp/libisl.so.10.2.2 /usr/lib/x86_64-linux-gnu/libisl.so.10.2.2
@@ -138,7 +131,7 @@ print_ok "Successfully!"
 
 
 if [ "$TOOLCHAIN_DIR" != "$DEFAULT_TOOLCHAIN_DIR" ]; then
-    sudo ln -sf $TOOLCHAIN_DIR/win32 $DEFAULT_TOOLCHAIN_DIR
+	sudo ln -sf $TOOLCHAIN_DIR/win32 $DEFAULT_TOOLCHAIN_DIR
 fi
 
 
@@ -150,18 +143,19 @@ if [ ! "$(id -u)" -ne 0 ]
 then
 	echo $MESSAGE >> /etc/profile
 
-    sudo mkdir -p /etc/kos32-gcc
-    echo $TOOLCHAIN_DIR > /etc/kos32-gcc/install-path
+	sudo mkdir -p /etc/kos32-gcc
+	echo $TOOLCHAIN_DIR > /etc/kos32-gcc/install-path
 else
-    if ! grep -q $EXPORT_MESSSAGE ~/.bashrc; then
-	    print_msg "Adding '$TOOLCHAIN_DIR/win32/bin' to '~/.bashrc'"
-	    echo '$EXPORT_MESSSAGE' >> ~/.bashrc
-    fi
+	if ! grep -q $EXPORT_MESSSAGE ~/.bashrc; then
+		print_msg "Adding '$TOOLCHAIN_DIR/win32/bin' to '~/.bashrc'"
+		echo '$EXPORT_MESSSAGE' >> ~/.bashrc
+	fi
 fi
 
 sudo chmod 775 $TOOLCHAIN_DIR/win32/bin/*
 sudo chmod 775 $TOOLCHAIN_DIR/win32/include/*
 sudo chmod -R 775 $TOOLCHAIN_DIR/win32/lib/gcc/mingw32/5.4.0/include
+
 
 cd "$OLDPWD"
 
