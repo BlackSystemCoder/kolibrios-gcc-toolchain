@@ -6,10 +6,10 @@
 		<version>0.1.5</version>
 		<authors>Egor00f</authors>
 		<owners>Egor00f</owners>
-		<summary>__REPLACE__</summary>
+		<summary>idk</summary>
 		<description>_KolibriOS gcc toolchain installer. This package installing KolibriOS gcc toolchain by Serge.</description>
 		<packageSourceUrl>https://github.com/Egor00f/kolibrios-gcc-toolchain/</packageSourceUrl>
-		<tags>kolibrios toolchain compiler c/C++</tags>
+		<tags>kolibrios toolchain compiler C/C++</tags>
 		<copyright></copyright>
 		<licenseUrl>https://github.com/Egor00f/kolibrios-gcc-toolchain/blob/main/LICENSE</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>

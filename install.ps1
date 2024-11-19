@@ -15,17 +15,17 @@ $LIBS_PATH = '$InstallPath\win32\mingw32\lib\'
 $LIBS_URL = 'http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/'
 
 
-Write-Progress -Activity 'Installing toolchain' -Status 'toolchain' -PercentComplete 0 -CurrentOperation 'Create the $InstallPath folder'
+Write-Progress -Activity 'Installing toolchain' -Status 'Installing toolchain' -PercentComplete 0 -CurrentOperation 'Create the $InstallPath folder'
 
 mkdir $InstallPath -Force
 
 
-Write-Progress -Activity 'Installing toolchain' -Status 'toolchain' -PercentComplete 1 -CurrentOperation 'Download the kos32-gcc toolchain'
+Write-Progress -Activity 'Installing toolchain' -Status 'Installing toolchain' -PercentComplete 1 -CurrentOperation 'Download the kos32-gcc toolchain'
 
 Invoke-WebRequest http://ftp.kolibrios.org/users/Serge/new/Toolchain/msys-kos32-5.4.0.7z -OutFile $InstallPath\kos32-toolchain.7z
 
 
-Write-Progress -Activity 'Installing toolchain' -Status 'toolchain' -PercentComplete 20 -CurrentOperation 'Unpacking kos32-gcc toolchain'
+Write-Progress -Activity 'Installing toolchain' -Status 'Installing toolchain' -PercentComplete 20 -CurrentOperation 'Unpacking kos32-gcc toolchain'
 
 Expand-7Zip -ArchiveFileName $InstallPath\kos32-toolchain.7z -TargetPath $InstallPath
 
@@ -55,4 +55,3 @@ foreach( $file in $files ) {
 
 Write-Progress -Activity 'Installing toolchain' -Status 'Done!' -PercentComplete 99 -CurrentOperation "end"
 
-$env:Path += ';$InstallPath\win32\bin'
