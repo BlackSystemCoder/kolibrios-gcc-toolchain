@@ -98,6 +98,8 @@ print_msg "Updating libraries"
 
 cd lib
 sudo wget -r --no-parent -q http://builds.kolibrios.org/en_US/data/contrib/sdk/lib
+mv builds.kolibrios.org/en_US/data/contrib/sdk/lib/* ./
+rm -R builds.kolibrios.org
 
 print_ok "Successfully!"
 
