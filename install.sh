@@ -156,7 +156,7 @@ fi
 
 sudo chmod 775 $TOOLCHAIN_DIR/win32/bin/*
 sudo chmod 774 $TOOLCHAIN_DIR/win32/include/*
-sudo chmod -R 774 $TOOLCHAIN_DIR/win32/lib/gcc/mingw32/5.4.0/include
+sudo chmod -R 775 /home/autobuild/tools/win32/lib/gcc
 sudo chmod 774 $TOOLCHAIN_DIR/win32/lib/*
 
 cd "$OLDPWD"
