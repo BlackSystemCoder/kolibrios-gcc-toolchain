@@ -10,7 +10,10 @@
 
 ### Linux
 
-Просто запустите `install.sh`.
+Просто запустите `install.sh` с аргументом `online`:
+```
+./install.sh online
+```
 
 Некоторые команды требуют sudo.
 

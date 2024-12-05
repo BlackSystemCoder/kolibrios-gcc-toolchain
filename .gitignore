@@ -6,3 +6,4 @@ build/
 chocolatey/kos32-gcc*.nupkg
 chocolatey/install.ps1
 chocolatey/tools/install.ps1
+*.7z

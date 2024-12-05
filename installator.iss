@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "KolibriOS gcc toolchain"
-#define MyAppVersion "0.1.5"
+#define MyAppVersion "0.1.6"
 #define MyAppPublisher "Egor00f"
 #define MyAppURL "https://github.com/Egor00f/kolibrios-gcc-toolchain"
 
@@ -65,11 +65,10 @@ Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
     Check: NeedsAddPath('{app}\win32\bin')
 
 [Files]
-Source: ".\install.ps1"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ".\build\libs"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ".\build\win32"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
-[Run]
-Filename: "{app}\install.ps1"; description: "install script"; StatusMsg: "Installing toolchain"; Parameters: "-InstallPath {app}"; Flags: runhidden logoutput
 
 [Icons]
 Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
