@@ -76,7 +76,7 @@ print_ok "Successfully!"
 print_msg "Extracting files ..."
 
 cd $TOOLCHAIN_DIR
-sudo 7z x -y kos32-toolchain.7z
+sudo 7z x -y -bso0 -bsp0 kos32-toolchain.7z
 sudo rm -rf kos32-toolchain.7z
 
 print_ok "Successfully!"
@@ -87,7 +87,7 @@ print_msg "Downloading libraries..."
 
 cd $TOOLCHAIN_DIR/win32/mingw32
 sudo wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z -q -O sdk-28-10-16.7z
-sudo 7z x -y sdk-28-10-16.7z
+sudo 7z x -y -bso0 -bsp0 sdk-28-10-16.7z
 sudo rm -rf sdk-28-10-16.7z
 
 print_ok "Successfully!"
@@ -109,7 +109,7 @@ print_msg "Downloading libisl..."
 
 cd /tmp
 sudo wget http://board.kolibrios.org/download/file.php?id=8301libisl.so.10.2.2.7z -q -O /tmp/libisl.so.10.2.2.7z
-sudo 7z x -y libisl.so.10.2.2.7z
+sudo 7z x -y -bso0 -bsp0 libisl.so.10.2.2.7z
 
 if ! [ -d /usr/lib/x86_64-linux-gnu/ ]; then
 	sudo mkdir -p /usr/lib/x86_64-linux-gnu/
