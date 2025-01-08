@@ -49,15 +49,9 @@ Call :print_msg Updating libraries
 
 cd %TOOLCHAIN_DIR%\win32\mingw32\lib
 
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libdll.a -O %TOOLCHAIN_DIR%\win32\mingw32\lib\libdll.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libfreetype.a -O %TOOLCHAIN_DIR%\win32\mingw32\lib\libfreetype.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libc.dll.a -O %TOOLCHAIN_DIR%\win32\mingw32\lib\libc.dll.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libSDLn.a -O %TOOLCHAIN_DIR%\win32\mingw32\lib\libSDLn.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libcurses.a -O %TOOLCHAIN_DIR%\win32\mingw32\lib\libcurses.a 
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libz.dll.a -O %TOOLCHAIN_DIR%\win32\mingw32\lib\libz.dll.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libogg.a -O %TOOLCHAIN_DIR%\win32\mingw32\lib\libogg.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libvorbis.a -O %TOOLCHAIN_DIR%\win32\mingw32\lib\libvorbis.a
-wget http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/libopenjpeg.a -O %TOOLCHAIN_DIR%\win32\mingw32\lib\libopenjpeg.a
+wget -r --no-parent http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/
+move /-y builds.kolibrios.org\en_US\data\contrib\sdk\lib\* .\
+rd /s /q builds.kolibrios.org
 
 Call :print_ok Successfully!
 

@@ -5,6 +5,11 @@
 # modified by Egor00f (Egor)
 
 set -e
+pwd
+
+DEFAULT_TOOLCHAIN_DIR="/home/autobuild/tools"
+
+TOOLCHAIN_DIR=$DEFAULT_TOOLCHAIN_DIR
 
 print_msg(){
 	echo -e "\e[34m$1\e[0m"
@@ -29,22 +34,14 @@ check_utils(){
 	fi
 }
 
-pwd
-
-DEFAULT_TOOLCHAIN_DIR="/home/autobuild/tools"
-
-TOOLCHAIN_DIR=$DEFAULT_TOOLCHAIN_DIR
-
-MESSAGE="Toolchain install path(default is $TOOLCHAIN_DIR): "
-
-echo -n $MESSAGE
+echo -n -e "\e[0m Toolchain install path \e[90m(default is $TOOLCHAIN_DIR): \e[97m"
 read INPUT
 
 if [[ ! -z "$INPUT" ]]; then
 	TOOLCHAIN_DIR=$INPUT
 fi
 
-echo "Installing toolchain to $TOOLCHAIN_DIR"
+echo -e "\e[0mInstalling toolchain to \e[97m$TOOLCHAIN_DIR\e[0m"
 
 
 print_msg "Checking utilities..."
@@ -97,7 +94,7 @@ print_ok "Successfully!"
 print_msg "Updating libraries"
 
 cd lib
-sudo wget -r --no-parent -q http://builds.kolibrios.org/en_US/data/contrib/sdk/lib
+sudo wget -r --no-parent -q http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/
 sudo mv builds.kolibrios.org/en_US/data/contrib/sdk/lib/* ./
 sudo rm -R builds.kolibrios.org
 

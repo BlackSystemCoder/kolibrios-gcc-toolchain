@@ -1,6 +1,6 @@
 Package: kos32-gcc
-Version: 0.1.6
-Architecture: all
+Version: 0.1.7
+Architecture: amd64
 Section: devel
 Depends: libc6-i386:amd64, libmpc3:amd64
 Pre-Depends: p7zip-full, wget
