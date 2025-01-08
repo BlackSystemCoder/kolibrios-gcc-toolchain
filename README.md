@@ -43,6 +43,8 @@ wget для windows можно поискать в GnuWin32 например, 7z
 
 ### Windows
 
+Для сборки установщиков необходимы `CoreUtils` и `wget` из `GnuWin32`.
+
 Установщик собирается с помощью Inno Setup. Цель для сборки Installer. Для сборки требуется компилятор Inno Setup.
 
 Если сборка не работает, добавьте папку Inno Setup (например: `C:\Programs Files\Inno Setup 6`) в PATH.

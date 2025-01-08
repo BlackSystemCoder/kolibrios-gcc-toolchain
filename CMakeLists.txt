@@ -7,13 +7,13 @@ project(
 
 add_custom_target(
 	download_libraries
-	COMMAND wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z -q
-	COMMAND wget -r --no-parent -q http://builds.kolibrios.org/en_US/data/contrib/sdk/lib
-	COMMAND 7z x -y sdk-28-10-16.7z
-	COMMAND mv builds.kolibrios.org/en_US/data/contrib/sdk/lib/* ./
-	COMMAND rm -R builds.kolibrios.org
+	COMMAND mkdir -p ${CMAKE_CURRENT_BINARY_DIR}/libs
+	COMMAND wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z -q -O ${CMAKE_CURRENT_BINARY_DIR}/libs/sdk-28-10-16.7z
+	COMMAND wget -r --no-parent -q http://builds.kolibrios.org/en_US/data/contrib/sdk/lib -O ${CMAKE_CURRENT_BINARY_DIR}/libs/builds.kolibrios.org
+	COMMAND 7z x -y ${CMAKE_CURRENT_BINARY_DIR}/libs/sdk-28-10-16.7z
+	COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/libs/builds.kolibrios.org/en_US/data/contrib/sdk/lib/* ${CMAKE_CURRENT_BINARY_DIR}/libs
+	COMMAND rm -R ${CMAKE_CURRENT_BINARY_DIR}/libs/builds.kolibrios.org
 	COMMENT "Download libraries"
-	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/libs
 )
 
 add_custom_target(
@@ -30,7 +30,6 @@ add_custom_target(
 	COMMENT "Download windows toolchain"
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
-
 
 add_custom_target(
 	deb
