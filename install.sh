@@ -34,7 +34,7 @@ check_utils(){
 	fi
 }
 
-echo -n -e "\e[0m Toolchain install path \e[90m(default is $TOOLCHAIN_DIR): \e[97m"
+echo -n -e "\e[0mToolchain install path \e[90m(default is $TOOLCHAIN_DIR)\e[97m: "
 read INPUT
 
 if [[ ! -z "$INPUT" ]]; then
