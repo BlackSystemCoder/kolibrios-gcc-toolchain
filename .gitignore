@@ -6,4 +6,5 @@ build/
 chocolatey/kos32-gcc*.nupkg
 chocolatey/install.ps1
 chocolatey/tools/install.ps1
+bat/builds.kolibrios.org
 *.7z

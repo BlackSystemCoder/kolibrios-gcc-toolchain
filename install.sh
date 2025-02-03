@@ -5,6 +5,11 @@
 # modified by Egor00f (Egor)
 
 set -e
+pwd
+
+DEFAULT_TOOLCHAIN_DIR="/home/autobuild/tools"
+
+TOOLCHAIN_DIR=$DEFAULT_TOOLCHAIN_DIR
 
 print_msg(){
 	echo -e "\e[34m$1\e[0m"
@@ -29,22 +34,14 @@ check_utils(){
 	fi
 }
 
-pwd
-
-DEFAULT_TOOLCHAIN_DIR="/home/autobuild/tools"
-
-TOOLCHAIN_DIR=$DEFAULT_TOOLCHAIN_DIR
-
-MESSAGE="Toolchain install path(default is $TOOLCHAIN_DIR): "
-
-echo -n $MESSAGE
+echo -n -e "\e[0mToolchain install path \e[90m(default is $TOOLCHAIN_DIR)\e[97m: "
 read INPUT
 
 if [[ ! -z "$INPUT" ]]; then
 	TOOLCHAIN_DIR=$INPUT
 fi
 
-echo "Installing toolchain to $TOOLCHAIN_DIR"
+echo -e "\e[0mInstalling toolchain to \e[97m$TOOLCHAIN_DIR\e[0m"
 
 
 print_msg "Checking utilities..."
@@ -84,7 +81,7 @@ print_msg "Downloading libraries..."
 
 cd $TOOLCHAIN_DIR/win32/mingw32
 sudo wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z -q -O sdk-28-10-16.7z
-sudo 7z x -y sdk-28-10-16.7z
+sudo 7z x -y -bso0 -bsp0 sdk-28-10-16.7z
 sudo rm -rf sdk-28-10-16.7z
 
 print_ok "Successfully!"
@@ -94,7 +91,7 @@ print_ok "Successfully!"
 print_msg "Updating libraries"
 
 cd lib
-sudo wget -r --no-parent -q http://builds.kolibrios.org/en_US/data/contrib/sdk/lib
+sudo wget -r --no-parent -q http://builds.kolibrios.org/en_US/data/contrib/sdk/lib/
 sudo mv builds.kolibrios.org/en_US/data/contrib/sdk/lib/* ./
 sudo rm -R builds.kolibrios.org
 
@@ -105,9 +102,10 @@ print_ok "Successfully!"
 if ["$1" == "online"]; then
 	print_msg "Downloading libisl..."
 
-	cd /tmp
-	sudo wget http://board.kolibrios.org/download/file.php?id=8301libisl.so.10.2.2.7z -q -O /tmp/libisl.so.10.2.2.7z
-	sudo 7z x -y libisl.so.10.2.2.7z
+cd /tmp
+sudo wget http://board.kolibrios.org/download/file.php?id=8301libisl.so.10.2.2.7z -q -O /tmp/libisl.so.10.2.2.7z
+sudo 7z x -y -bso0 -bsp0 libisl.so.10.2.2.7z
+	
 
 	if ! [ -d /usr/lib/x86_64-linux-gnu/ ]; then
 		sudo mkdir -p /usr/lib/x86_64-linux-gnu/
@@ -156,8 +154,9 @@ fi
 
 sudo chmod 775 $TOOLCHAIN_DIR/win32/bin/*
 sudo chmod 774 $TOOLCHAIN_DIR/win32/include/*
-sudo chmod -R 775 /home/autobuild/tools/win32/lib/gcc
 sudo chmod 774 $TOOLCHAIN_DIR/win32/lib/*
+sudo chmod 774 $TOOLCHAIN_DIR/win32/mingw32/lib/*
+sudo chmod -R 775 /home/autobuild/tools/win32/lib/gcc
 
 cd "$OLDPWD"
 
