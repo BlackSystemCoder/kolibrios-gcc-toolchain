@@ -10,7 +10,10 @@
 
 ### Linux
 
-Просто запустите `install.sh`.
+Просто запустите `install.sh` с аргументом `online`:
+```
+./install.sh online
+```
 
 Некоторые команды требуют sudo.
 
@@ -43,6 +46,8 @@ install.bat Path
 Можно собрать deb пакет. Цель для сборки Package. Для сборки требуется `dpkg-deb`.
 
 ### Windows
+
+Для сборки установщиков необходимы `CoreUtils` и `wget` из `GnuWin32`.
 
 Установщик собирается с помощью Inno Setup. Цель для сборки Installer. Для сборки требуется компилятор Inno Setup.
 

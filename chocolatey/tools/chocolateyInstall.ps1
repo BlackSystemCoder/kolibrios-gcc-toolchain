@@ -8,7 +8,8 @@ $packageName = 'kos32-gcc' # arbitrary name for the package, used in messages
 
 $INSTALL_PATH = Read-Host 'Path to install toolchain(Enter - default)'
 
-C:\ProgramData\Chocolatey\lib\kos32-gcc\tools\install.ps1
+Expand-7Zip -ArchiveFileName C:\ProgramData\Chocolatey\lib\kos32-gcc\tools\kos32-toolchain-win.7z  -TargetPath $INSTALL_PATH
+
 
 Out-File -FilePath C:\ProgramData\Chocolatey\lib\kos32-gcc\install-path -InputObject $INSTALL_PATH
 
