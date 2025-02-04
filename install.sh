@@ -46,6 +46,8 @@ echo -e "\e[0mInstalling toolchain to \e[97m$TOOLCHAIN_DIR\e[0m"
 
 print_msg "Checking utilities..."
 
+
+
 check_utils wget
 check_utils 7z
 
@@ -59,21 +61,22 @@ sudo mkdir -p $TOOLCHAIN_DIR
 print_ok "Successfully!"
 
 
-if ["$1" == "online"]; then
-	print_msg "Download the kos32-gcc toolchain..."
 
-	sudo wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/x86_64-linux-kos32-5.4.0.7z -q -O /tmp/kos32-toolchain.7z
+print_msg "Download the kos32-gcc toolchain..."
 
-	print_ok "Successfully!"
-fi
-
-print_msg "Extracting files ..."
-
-sudo 7z x -y /tmp/kos32-toolchain.7z -o $TOOLCHAIN_DIR
-sudo rm -rf /tmp/kos32-toolchain.7z
+sudo wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/x86_64-linux-kos32-5.4.0.7z -q -O $TOOLCHAIN_DIR/kos32-toolchain.7z
 
 print_ok "Successfully!"
 
+
+
+print_msg "Extracting files ..."
+
+cd $TOOLCHAIN_DIR
+sudo 7z x -y -bso0 -bsp0 kos32-toolchain.7z
+sudo rm -rf kos32-toolchain.7z
+
+print_ok "Successfully!"
 
 
 
@@ -99,21 +102,17 @@ print_ok "Successfully!"
 
 
 
-if ["$1" == "online"]; then
-	print_msg "Downloading libisl..."
+print_msg "Downloading libisl..."
 
 cd /tmp
 sudo wget http://board.kolibrios.org/download/file.php?id=8301libisl.so.10.2.2.7z -q -O /tmp/libisl.so.10.2.2.7z
 sudo 7z x -y -bso0 -bsp0 libisl.so.10.2.2.7z
-	
 
-	if ! [ -d /usr/lib/x86_64-linux-gnu/ ]; then
-		sudo mkdir -p /usr/lib/x86_64-linux-gnu/
-	fi
-
-	sudo mv /tmp/libisl.so.10.2.2 /usr/lib/x86_64-linux-gnu/libisl.so.10.2.2
+if ! [ -d /usr/lib/x86_64-linux-gnu/ ]; then
+	sudo mkdir -p /usr/lib/x86_64-linux-gnu/
 fi
 
+sudo mv /tmp/libisl.so.10.2.2 /usr/lib/x86_64-linux-gnu/libisl.so.10.2.2
 sudo ln -sf /usr/lib/x86_64-linux-gnu/libisl.so.10.2.2 /usr/lib/x86_64-linux-gnu/libisl.so.10
 sudo ln -sf /usr/lib/x86_64-linux-gnu/libisl.so.10.2.2 /usr/lib/libisl.so.10
 sudo chmod go-w /usr/lib/x86_64-linux-gnu/libisl.so.10 
