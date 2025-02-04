@@ -32,25 +32,43 @@ add_custom_target(
 )
 
 add_custom_target(
-	deb
-	COMMAND mkdir -p ${CMAKE_CURRENT_SOURCE_DIR}/package/usr/lib/x86_64-linux-gnu
-	COMMAND cp -f ${CMAKE_CURRENT_SOURCE_DIR}/install.sh ${CMAKE_CURRENT_SOURCE_DIR}/package/DEBIAN/postinst
-	COMMAND cp -f ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/package/DEBIAN/copyright
-	COMMAND 7z x ${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2.7z -o ${CMAKE_CURRENT_SOURCE_DIR}/package/usr/lib/x86_64-linux-gnu/libisl.so.10.2.2
-	COMMAND chmod 775 ${CMAKE_CURRENT_SOURCE_DIR}/package/DEBIAN
-	COMMAND chmod 775 ${CMAKE_CURRENT_SOURCE_DIR}/package/DEBIAN/control
-	COMMAND chmod 775 ${CMAKE_CURRENT_SOURCE_DIR}/package/DEBIAN/prerm
-	COMMAND chmod 775 ${CMAKE_CURRENT_SOURCE_DIR}/package/DEBIAN/postinst
-	COMMAND chmod 775 ${CMAKE_CURRENT_SOURCE_DIR}/package/DEBIAN/postrm
-	COMMAND chmod 775 ${CMAKE_CURRENT_SOURCE_DIR}/package/DEBIAN/copyright
-	COMMAND dpkg-deb --build ${CMAKE_CURRENT_SOURCE_DIR}/package ${CMAKE_CURRENT_BINARY_DIR}/package.deb
+	extract_linux
+	COMMENT "Extract linux archives"
+	COMMAND 7z x ${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2.7z
+	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+add_custom_target(
+	configureDebPackage
+	COMMENT "Setup debian package"
+	COMMAND cp -rf ${CMAKE_CURRENT_SOURCE_DIR}/package/ ${CMAKE_CURRENT_BINARY_DIR}/package
+	COMMAND chmod -R 775 ${CMAKE_CURRENT_BINARY_DIR}/package
+	COMMAND mkdir -p ${CMAKE_CURRENT_BINARY_DIR}/package/usr/lib/x86_64-linux-gnu
+	COMMAND mkdir -p ${CMAKE_CURRENT_BINARY_DIR}/package/home/autobuild/tools
+	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+	SOURCES
+		${CMAKE_CURRENT_SOURCE_DIR}/package/
+)
+
+
+add_custom_target(
+	debOffline
+	COMMAND cp -f ${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2 ${CMAKE_CURRENT_BINARY_DIR}/package/usr/lib/x86_64-linux-gnu/libisl.so.10.2.2
+	COMMAND cp -f ${CMAKE_CURRENT_BINARY_DIR}/kos32-toolchain-linux.7z ${CMAKE_CURRENT_BINARY_DIR}/package/home/autobuild/tools
+	COMMAND dpkg-deb --build ${CMAKE_CURRENT_BINARY_DIR}/package ${CMAKE_CURRENT_BINARY_DIR}/package.deb
+	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+	COMMENT "Build deb offline package"
+)
+
+add_custom_target(
+	debOnline
+	COMMAND cp -f ${CMAKE_CURRENT_SOURCE_DIR}/install.sh ${CMAKE_CURRENT_BINARY_DIR}/package/DEBIAN/postinst
+	COMMAND cp -f ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE ${CMAKE_CURRENT_BINARY_DIR}/package/DEBIAN/copyright
+	COMMAND dpkg-deb --build ${CMAKE_CURRENT_BINARY_DIR}/package ${CMAKE_CURRENT_BINARY_DIR}/package.deb
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	COMMENT "Build deb package"
 	SOURCES 
-	${CMAKE_CURRENT_SOURCE_DIR}/install.sh 
-	${CMAKE_CURRENT_SOURCE_DIR}/LICENSE 
-	${CMAKE_CURRENT_SOURCE_DIR}/package/DEBIAN/control
-	${CMAKE_CURRENT_SOURCE_DIR}/package/DEBIAN/postrm
+		${CMAKE_CURRENT_SOURCE_DIR}/install.sh
 )
 
 add_custom_target(
@@ -74,7 +92,17 @@ add_custom_target(
 )
 
 add_dependencies(
-	deb 
+	debOnline 
+	configureDebPackage
+)
+
+add_dependencies(
+	debOffline 
+	configureDebPackage
+)
+
+add_dependencies(
+	configureDebPackage
 	download_linux
 )
 
