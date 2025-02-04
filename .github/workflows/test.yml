@@ -1,8 +1,13 @@
-name: Test
+name: Test packages
 
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - '.vscode/**'
+      - '.devcontainer/**'
+      - '.gitignore'
+      - 'CONTRIBUTING.md'
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
@@ -98,7 +103,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: deb-package
+          name: deb-online-package
           # Upload entire repository
           path: './build/package.deb'
 
@@ -148,7 +153,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: deb-package
+          name: deb-offline-package
           # Upload entire repository
           path: './build/package.deb'
 

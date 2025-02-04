@@ -8,5 +8,5 @@ MESSAGE="PATH=\$PATH:$TOOLCHAIN_DIR/win32/bin"
 
 sudo sed -i '/$MESSAGE/d' /etc/profile
 
-rm /etc/kos32-gcc -R
+rm -R /etc/kos32-gcc
 

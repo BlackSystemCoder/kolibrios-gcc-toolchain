@@ -22,6 +22,9 @@ add_custom_target(
 	COMMAND wget http://board.kolibrios.org/download/file.php?id=8301libisl.so.10.2.2.7z -q -O ${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2.7z
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	COMMENT "Download linux toolchain"
+	BYPRODUCTS
+		${CMAKE_CURRENT_BINARY_DIR}/kos32-toolchain-linux.7z
+		${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2.7z
 )
 
 add_custom_target(
@@ -29,6 +32,8 @@ add_custom_target(
 	COMMAND wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/msys-kos32-5.4.0.7z -q -O ${CMAKE_CURRENT_BINARY_DIR}/kos32-toolchain-win.7z
 	COMMENT "Download windows toolchain"
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+	BYPRODUCTS
+		${CMAKE_CURRENT_BINARY_DIR}/kos32-toolchain-win.7z
 )
 
 add_custom_target(
@@ -36,6 +41,10 @@ add_custom_target(
 	COMMENT "Extract linux archives"
 	COMMAND 7z x ${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2.7z
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+	BYPRODUCTS
+		${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2
+	DEPENDS 
+		${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2.7z
 )
 
 add_custom_target(
@@ -48,6 +57,8 @@ add_custom_target(
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	SOURCES
 		${CMAKE_CURRENT_SOURCE_DIR}/package/
+	BYPRODUCTS
+		${CMAKE_CURRENT_BINARY_DIR}/package
 )
 
 
@@ -58,6 +69,11 @@ add_custom_target(
 	COMMAND dpkg-deb --build ${CMAKE_CURRENT_BINARY_DIR}/package ${CMAKE_CURRENT_BINARY_DIR}/package.deb
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	COMMENT "Build deb offline package"
+	BYPRODUCTS
+		${CMAKE_CURRENT_BINARY_DIR}/package.deb
+	DEPENDS
+		${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2.7z
+		${CMAKE_CURRENT_BINARY_DIR}/kos32-toolchain-linux.7z
 )
 
 add_custom_target(
@@ -69,6 +85,9 @@ add_custom_target(
 	COMMENT "Build deb package"
 	SOURCES 
 		${CMAKE_CURRENT_SOURCE_DIR}/install.sh
+		${CMAKE_CURRENT_SOURCE_DIR}/LICENSE
+	BYPRODUCTS
+		${CMAKE_CURRENT_BINARY_DIR}/package.deb
 )
 
 add_custom_target(
@@ -78,9 +97,9 @@ add_custom_target(
 	COMMENT "Build windows installer"
 	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	SOURCES
-	${CMAKE_CURRENT_SOURCE_DIR}/installator.iss
-	${CMAKE_CURRENT_SOURCE_DIR}/LICENSE
-	${CMAKE_CURRENT_SOURCE_DIR}/README.md
+		${CMAKE_CURRENT_SOURCE_DIR}/installator.iss
+		${CMAKE_CURRENT_SOURCE_DIR}/LICENSE
+		${CMAKE_CURRENT_SOURCE_DIR}/README.md
 )
 
 add_custom_target(
@@ -103,6 +122,11 @@ add_dependencies(
 
 add_dependencies(
 	configureDebPackage
+	extract_linux
+)
+
+add_dependencies(
+	extract_linux
 	download_linux
 )
 

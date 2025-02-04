@@ -14,5 +14,4 @@
 		".vscode-insiders",
 		"package/DEBIAN"
 	],
-	"cmake.parallelJobs": 1
 }
