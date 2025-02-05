@@ -58,7 +58,7 @@ sudo mkdir -p $TOOLCHAIN_DIR
 
 print_ok "Successfully!"
 
-print_msg "Extracting files ..."
+print_msg "Extracting toolchain ..."
 
 sudo 7z x -y /home/autobuild/tools/kos32-toolchain-linux.7z -o$TOOLCHAIN_DIR
 sudo rm -rf /home/autobuild/tools/kos32-toolchain-linux.7z
@@ -68,21 +68,14 @@ print_ok "Successfully!"
 
 
 
-print_msg "Downloading libraries..."
+print_msg "Extracting libraries..."
 
 cd $TOOLCHAIN_DIR/win32/mingw32
-sudo 7z x -y -bso0 -bsp0 sdk-28-10-16.7z
-sudo rm -rf sdk-28-10-16.7z
+sudo 7z x -y -bso0 -bsp0 /home/autobuild/tools/lib.7z
+sudo rm -rf /home/autobuild/tools/lib.7z
 
 print_ok "Successfully!"
 
-
-
-print_msg "Updating libraries"
-
-cd lib
-
-print_ok "Successfully!"
 
 
 if ! [ -d /usr/lib/x86_64-linux-gnu/ ]; then
