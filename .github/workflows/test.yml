@@ -87,88 +87,37 @@ jobs:
           # Upload entire repository
           path: './build/installer.exe'
 
-  # Test online deb package build
-  deb-online-package-build:
-    name: Debian online package build test
+  # Test deb package build
+  deb-package-build:
+    name: Debian package build test
     runs-on: ubuntu-latest
-    needs: linux-install
     steps:
       - uses: actions/checkout@v4
               
       - name: Build
         run: |
           cmake -B ${{ github.workspace }}/build
-          cmake --build ${{ github.workspace }}/build --target debOnline
+          cmake --build ${{ github.workspace }}/build --target deb
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: deb-online-package
+          name: deb-package
           # Upload entire repository
           path: './build/package.deb'
 
   # Test deb package install/remove
-  deb-online-package-test:
-    name: Debian online package install/remove test
+  deb-package-test:
+    name: Debian package install/remove test
     runs-on: ubuntu-latest
-    needs: deb-online-package-build
+    needs: deb-package-build
     steps:
       - uses: actions/checkout@v4
               
       - name: Build
         run: |
           cmake -B ${{ github.workspace }}/build
-          cmake --build ${{ github.workspace }}/build --target debOnline
-
-      - name: Install package
-        run: echo '/kolibrios-toolchain' | sudo apt install ${{ github.workspace }}/build/package.deb -y
-        
-      - name: Add toolchain to path
-        run: echo "/kolibrios-toolchain/win32/bin" >> $GITHUB_PATH
-        
-      - name: Test run
-        run: |
-          kos32-g++ -v
-          kos32-gcc -v
-          /home/autobuild/tools/win32/bin/kos32-gcc -v
-          /home/autobuild/tools/win32/bin/kos32-g++ -v
-          /kolibrios-toolchain/win32/bin/kos32-gcc -v
-          /kolibrios-toolchain/win32/bin/kos32-g++ -v
-
-      - name: Remove package
-        run: sudo apt remove kos32-gcc
-
-  # Test offline deb package build
-  deb-offline-package-build:
-    name: Debian offline package build test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-              
-      - name: Build
-        run: |
-          cmake -B ${{ github.workspace }}/build
-          cmake --build ${{ github.workspace }}/build --target debOffline
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: deb-offline-package
-          # Upload entire repository
-          path: './build/package.deb'
-
-  # Test deb package install/remove
-  deb-offline-package-test:
-    name: Debian offline package install/remove test
-    runs-on: ubuntu-latest
-    needs: deb-offline-package-build
-    steps:
-      - uses: actions/checkout@v4
-              
-      - name: Build
-        run: |
-          cmake -B ${{ github.workspace }}/build
-          cmake --build ${{ github.workspace }}/build --target debOffline
+          cmake --build ${{ github.workspace }}/build --target deb
 
       - name: Install package
         run: echo '/kolibrios-toolchain' | sudo apt install ${{ github.workspace }}/build/package.deb -y

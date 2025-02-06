@@ -60,7 +60,7 @@ print_ok "Successfully!"
 
 print_msg "Extracting toolchain ..."
 
-sudo 7z x -y /home/autobuild/tools/kos32-toolchain-linux.7z -o$TOOLCHAIN_DIR
+sudo 7z x -y  -bso0 -bsp0 /home/autobuild/tools/kos32-toolchain-linux.7z -o$TOOLCHAIN_DIR
 sudo rm -rf /home/autobuild/tools/kos32-toolchain-linux.7z
 
 print_ok "Successfully!"
