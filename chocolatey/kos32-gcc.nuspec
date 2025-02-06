@@ -3,7 +3,7 @@
 	<metadata>
 		<id>kos32-gcc</id>
 		<title>KolibriOS gcc toolchain installer</title>
-		<version>0.1.5</version>
+		<version>0.1.6</version>
 		<authors>Egor00f</authors>
 		<owners>Egor00f</owners>
 		<summary>idk</summary>

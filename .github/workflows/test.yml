@@ -1,8 +1,13 @@
-name: Test
+name: Test packages
 
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - '.vscode/**'
+      - '.devcontainer/**'
+      - '.gitignore'
+      - 'CONTRIBUTING.md'
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
@@ -11,6 +16,7 @@ jobs:
 
   #Test linux install script
   linux-install:
+    name: linux(sh) script install test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,6 +34,7 @@ jobs:
 
   #Test Batch install script
   batch-install:
+    name: Batch script install test
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,6 +49,7 @@ jobs:
 
   #Test PowerShell install script
   PowerShell-install:
+    name: PowerShell install script test
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -61,6 +69,7 @@ jobs:
 
   #Test Windows Installer
   build-Installer:
+    name: Build windows installer test
     runs-on: windows-latest
     needs: PowerShell-install
     steps:
@@ -80,8 +89,8 @@ jobs:
 
   # Test deb package build
   deb-package-build:
+    name: Debian package build test
     runs-on: ubuntu-latest
-    needs: linux-install
     steps:
       - uses: actions/checkout@v4
               
@@ -99,6 +108,7 @@ jobs:
 
   # Test deb package install/remove
   deb-package-test:
+    name: Debian package install/remove test
     runs-on: ubuntu-latest
     needs: deb-package-build
     steps:
@@ -129,6 +139,7 @@ jobs:
 
   #Test chocolatey package build
   chocolatey-package-build:
+    name: Chocolatey build package test
     runs-on: windows-latest
     needs: PowerShell-install
     steps:
@@ -148,6 +159,7 @@ jobs:
 
   # Test chocolatey package install/remove
   chocolatey-package-test:
+    name: chocolatey install test
     runs-on: windows-latest
     needs: chocolatey-package-build
     steps:
