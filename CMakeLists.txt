@@ -12,58 +12,68 @@ add_custom_target(
 	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/lib
 	COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/builds.kolibrios.org/en_US/data/contrib/sdk/lib/* ${CMAKE_CURRENT_BINARY_DIR}/lib
 	COMMAND rm -R ${CMAKE_CURRENT_BINARY_DIR}/builds.kolibrios.org
-	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	COMMENT "Download libraries"
-	BYPRODUCTS
-		${CMAKE_CURRENT_BINARY_DIR}/lib
+	OUTPUT
 		${CMAKE_CURRENT_BINARY_DIR}/sdk-28-10-16.7z
+	BYPRODUCTS
+		${CMAKE_CURRENT_BINARY_DIR}/sdk-28-10-16.7z
+	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_target(
 	archive_libraries
 	COMMAND 7z x -y -bso0 -bsp0 ${CMAKE_CURRENT_BINARY_DIR}/sdk-28-10-16.7z -o${CMAKE_CURRENT_BINARY_DIR}
 	COMMAND 7z a -bso0 -bsp0 ${CMAKE_CURRENT_BINARY_DIR}/lib.7z ${CMAKE_CURRENT_BINARY_DIR}/lib
-	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+	COMMENT "Add libraries to archive"
+	OUTPUT
+		${CMAKE_CURRENT_BINARY_DIR}/lib.7z
 	BYPRODUCTS
 		${CMAKE_CURRENT_BINARY_DIR}/lib.7z
 	DEPENDS
 		${CMAKE_CURRENT_BINARY_DIR}/sdk-28-10-16.7z
+	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_target(
 	download_linux
 	COMMAND wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/x86_64-linux-kos32-5.4.0.7z -q -O ${CMAKE_CURRENT_BINARY_DIR}/kos32-toolchain-linux.7z
 	COMMAND wget http://board.kolibrios.org/download/file.php?id=8301libisl.so.10.2.2.7z -q -O ${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2.7z
-	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	COMMENT "Download linux toolchain"
+	OUTPUT
+		${CMAKE_CURRENT_BINARY_DIR}/kos32-toolchain-linux.7z
+		${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2.7z
 	BYPRODUCTS
 		${CMAKE_CURRENT_BINARY_DIR}/kos32-toolchain-linux.7z
 		${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2.7z
+	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_target(
 	download_windows
 	COMMAND wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/msys-kos32-5.4.0.7z -q -O ${CMAKE_CURRENT_BINARY_DIR}/kos32-toolchain-win.7z
 	COMMENT "Download windows toolchain"
-	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+	OUTPUT
+		${CMAKE_CURRENT_BINARY_DIR}/kos32-toolchain-win.7z
 	BYPRODUCTS
 		${CMAKE_CURRENT_BINARY_DIR}/kos32-toolchain-win.7z
+	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_target(
 	extract_linux
-	COMMENT "Extract linux archives"
 	COMMAND 7z x -y -bso0 -bsp0 ${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2.7z
-	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+	COMMENT "Extract linux archives"
+	OUTPUT
+		${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2
 	BYPRODUCTS
 		${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2
 	DEPENDS 
 		${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2.7z
+	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_target(
 	configureDebPackage
-	COMMAND 
 	COMMENT "Setup debian package"
 	COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_BINARY_DIR}/package
 	COMMAND cp -rf ${CMAKE_CURRENT_SOURCE_DIR}/package/ ${CMAKE_CURRENT_BINARY_DIR}/package
@@ -71,10 +81,10 @@ add_custom_target(
 	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/package/usr/lib/x86_64-linux-gnu
 	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/package/home/autobuild/tools
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-	SOURCES
+	OUTPUT
 		${CMAKE_CURRENT_SOURCE_DIR}/package/
 	BYPRODUCTS
-		${CMAKE_CURRENT_BINARY_DIR}/package
+		${CMAKE_CURRENT_BINARY_DIR}/package/
 )
 
 
@@ -86,12 +96,13 @@ add_custom_target(
 	COMMAND dpkg-deb --build ${CMAKE_CURRENT_BINARY_DIR}/package ${CMAKE_CURRENT_BINARY_DIR}/package.deb
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	COMMENT "Build deb package"
-	BYPRODUCTS
+	OUTPUT
 		${CMAKE_CURRENT_BINARY_DIR}/package.deb
 	DEPENDS
 		${CMAKE_CURRENT_BINARY_DIR}/libisl.so.10.2.2
 		${CMAKE_CURRENT_BINARY_DIR}/kos32-toolchain-linux.7z
 		${CMAKE_CURRENT_BINARY_DIR}/lib.7z
+		configureDebPackage
 )
 
 add_custom_target(
@@ -116,9 +127,4 @@ add_custom_target(
 		${CMAKE_CURRENT_SOURCE_DIR}/chocolatey/kos32-gcc.nuspec
 		${CMAKE_CURRENT_SOURCE_DIR}/chocolatey/tools/chocolateyInstall.ps1
 		${CMAKE_CURRENT_SOURCE_DIR}/chocolatey/tools/chocolateyUninstall.ps1
-)
-
-add_dependencies(
-	deb 
-	configureDebPackage
 )
