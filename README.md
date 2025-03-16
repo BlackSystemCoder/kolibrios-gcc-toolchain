@@ -1,3 +1,5 @@
+[![Test packages](https://github.com/Egor00f/kolibrios-gcc-toolchain/actions/workflows/test.yml/badge.svg)](https://github.com/Egor00f/kolibrios-gcc-toolchain/actions/workflows/test.yml)
+
 # Установщик gcc тулчейна для KolibriOS
 
 Просто устанавливает тулчейн C/C++ компилятора для KolinriOS от Serge.
