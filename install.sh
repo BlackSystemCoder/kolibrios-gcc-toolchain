@@ -35,13 +35,22 @@ check_utils(){
 	fi
 }
 
-TOOLCHAIN_DIR=$(head -n 1 $INSTALL_PATH_FILE)
-echo -n -e "\e[0mToolchain install path \e[90m(default is $TOOLCHAIN_DIR)\e[97m: "
-read INPUT
-
-if [[ ! -z "$INPUT" ]]; then
-	TOOLCHAIN_DIR=$INPUT
+if [ -f $INSTALL_PATH_FILE ]; then
+	TOOLCHAIN_DIR=$(head -n 1 $INSTALL_PATH_FILE)
+else
+	echo -n -e "\e[0mToolchain install path \e[90m(default is $DEFAULT_TOOLCHAIN_DIR)\e[97m: "
+	read INPUT
+	if [[ ! -z "$INPUT" ]]; then
+		TOOLCHAIN_DIR=$INPUT
+		if [[ ! -z "$INPUT" ]]; then
+			TOOLCHAIN_DIR=$INPUe
+		else
+			TOOLCHAIN_DIR=$DEFAULT_TOOLCHAIN_DIR
+		fi
+	fi
 fi
+
+echo -e "\e[0mInstalling toolchain to \e[97m$TOOLCHAIN_DIR\e[0m"
 
 print_msg "Checking utilities..."
 
