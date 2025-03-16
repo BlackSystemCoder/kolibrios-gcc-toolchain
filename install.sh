@@ -42,11 +42,8 @@ else
 	read INPUT
 	if [[ ! -z "$INPUT" ]]; then
 		TOOLCHAIN_DIR=$INPUT
-		if [[ ! -z "$INPUT" ]]; then
-			TOOLCHAIN_DIR=$INPUe
-		else
-			TOOLCHAIN_DIR=$DEFAULT_TOOLCHAIN_DIR
-		fi
+	else
+		TOOLCHAIN_DIR=$DEFAULT_TOOLCHAIN_DIR
 	fi
 fi
 
