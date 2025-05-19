@@ -9,7 +9,7 @@ pwd
 
 CONFIG_FOLDER="/etc/kos32-gcc"
 INSTALL_PATH_FILE="$CONFIG_FOLDER/install-path"
-DEFAULT_TOOLCHAIN_DIR="/home/autobuild/tools"
+DEFAULT_TOOLCHAIN_DIR="~/autobuild/tools"
 
 
 print_msg(){
